@@ -1,133 +1,148 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#142844">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#142948">
 <title>Benxamín C - U.D. Santa Mariña</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#edf2f7;color:#182638;font-family:Arial,sans-serif}
-header{background:#142844;color:white;padding:14px;text-align:center}
-.cabecera{display:flex;align-items:center;justify-content:center;gap:14px}
-.escudo{width:65px;height:75px;object-fit:contain}
-h1{font-size:21px;margin:0}
-header p{font-size:12px;margin:6px 0}
-main{max-width:1000px;margin:auto;padding:10px}
-.panel{background:white;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 2px 7px #0001}
-h2{font-size:19px}
-button{border:0;border-radius:8px;padding:11px;color:white;font-weight:bold;font-size:14px;cursor:pointer;touch-action:manipulation}
-button:disabled{opacity:.45}
-.verde{background:#168050}
-.rojo{background:#b83242}
-.azul{background:#1766d1}
-.gris{background:#617183}
-.botones{display:flex;flex-wrap:wrap;gap:7px}
-select,input{width:100%;padding:11px;border:1px solid #cad5df;border-radius:8px;font-size:16px}
-.reloj{text-align:center;font-size:51px;font-weight:900;font-variant-numeric:tabular-nums}
-.estado{text-align:center;font-weight:bold}
-.ayuda{color:#64748b;font-size:13px}
-.marcador{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;text-align:center;gap:8px}
-.equipo{background:#edf2f7;padding:13px 5px;border-radius:10px}
-.equipo-nombre{font-size:13px;font-weight:bold;min-height:32px}
-.goles{font-size:49px;font-weight:900}
-.parciales{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
-.parcial{background:#f2f5f9;border-radius:9px;padding:10px;text-align:center}
-.jugadores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.jugador{background:#edf1f6;border:2px solid transparent;border-radius:11px;padding:9px;min-width:0}
-.jugador.campo{background:#d9f6e4;border-color:#168050}
-.jugador.elegido{background:#dceafe;border-color:#1766d1}
-.nombre{font-size:16px;font-weight:bold;min-height:38px}
-.crono{text-align:center;font-size:24px;font-weight:900;font-variant-numeric:tabular-nums;margin:10px 0}
-.crono.activo{color:#08783d}
-.estado-jugador{text-align:center;font-size:12px;margin-bottom:7px}
-.accion{width:100%;margin-bottom:8px}
-.contadores{font-size:13px;margin:9px 0 5px;text-align:center;font-weight:bold}
-.dos{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-.dos button{padding:9px 2px;font-size:12px}
-.tabla{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:12px}
-th,td{padding:9px 4px;border-bottom:1px solid #ddd;white-space:nowrap}
-th:not(:first-child),td:not(:first-child){text-align:right}
-@media(min-width:700px){.jugadores{grid-template-columns:repeat(3,1fr)}}
+body{margin:0;background:#edf2f8;color:#172b43;font:15px system-ui,Arial,sans-serif}
+header{background:#142948;color:white;padding:15px;display:flex;align-items:center;justify-content:center;gap:12px}
+header img{width:62px;height:70px;object-fit:contain}
+header h1{font-size:19px;margin:0}
+header p{margin:4px 0;font-size:12px}
+main{max-width:1050px;margin:auto;padding:12px}
+.panel{background:white;border-radius:13px;padding:15px;margin-bottom:12px;box-shadow:0 1px 7px #14294817}
+h2{font-size:18px;margin:0 0 12px}
+label{display:block;font-weight:650;margin:9px 0 5px}
+input,select{font:inherit;width:100%;border:1px solid #b8c8d8;border-radius:9px;padding:11px;background:white;color:#172b43}
+button{border:0;border-radius:9px;padding:11px 10px;color:white;background:#2563ad;font:700 14px system-ui;cursor:pointer;touch-action:manipulation}
+button:disabled{opacity:.4}
+[hidden]{display:none!important}
+.green{background:#187b48}
+.red{background:#b12e42}
+.grey{background:#576d84}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.muted{color:#64748b;font-size:13px}
+.clock{text-align:center;font-size:49px;font-weight:850;font-variant-numeric:tabular-nums}
+.center{text-align:center}
+.score{display:grid;grid-template-columns:1fr auto 1fr;gap:9px;align-items:center;text-align:center}
+.team{background:#f0f4fa;border-radius:11px;padding:12px 6px}
+.team strong{font-size:13px;display:block;min-height:33px}
+.team b{display:block;font-size:46px}
+.halves{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.half{background:#f0f4fa;text-align:center;padding:10px;border-radius:9px}
+.players{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.player{background:#eef2f8;border:2px solid transparent;border-radius:12px;padding:10px;min-width:0}
+.player.playing{background:#daf7e6;border-color:#187b48}
+.player.selected{background:#deebff;border-color:#2563ad}
+.player h3{font-size:16px;margin:0;min-height:38px}
+.player .timer{font-size:27px;text-align:center;font-weight:850;font-variant-numeric:tabular-nums;margin:8px 0}
+.player.playing .timer{color:#147546}
+.player .status{text-align:center;font-size:11px;min-height:28px}
+.player .toggle{width:100%;margin:8px 0}
+.player .stat{text-align:center;font-weight:700;font-size:13px;margin:10px 0 5px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.duo button{padding:9px 2px;font-size:12px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:13px}
+td,th{padding:9px 5px;border-bottom:1px solid #dde4eb;text-align:right;white-space:nowrap}
+td:first-child,th:first-child{text-align:left}
+tr.playing-row{background:#e3f8eb}
+#trainingFields{display:none}
+@media(min-width:720px){
+.players{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:375px){
+.timer{font-size:23px!important}
+.player h3{font-size:14px}
+}
 </style>
 </head>
 <body>
 
 <header>
-<div class="cabecera">
-<img class="escudo" src="escudo-ud-santa-marina.png" alt="Escudo Santa Mariña">
+<img src="escudo-ud-santa-marina.png" alt="Escudo U.D. Santa Mariña" onerror="this.style.display='none'">
 <div>
 <h1>Benxamín C - U.D. Santa Mariña</h1>
-<p>Control de minutos y estadísticas</p>
-</div>
+<p>Minutos · Goles · Asistencias</p>
 </div>
 </header>
 
 <main>
 
 <section class="panel">
-<h2>📅 Partido</h2>
-<select id="calendario" onchange="cambiarPartido()"></select>
-<p id="informacion" class="ayuda"></p>
-<input id="rival" placeholder="Nombre del rival" onchange="guardarRival()">
+<h2>📅 Partido o entrenamiento</h2>
+<label for="match">Seleccionar jornada o partidillo</label>
+<select id="match"></select>
+
+<div id="trainingFields">
+<label for="trainingDate">Fecha del partidillo</label>
+<input type="date" id="trainingDate">
+<label for="trainingName">Nombre del partidillo</label>
+<input id="trainingName" placeholder="Ej.: Entreno del martes / Rojo vs Azul">
+<button class="green" id="createTraining" style="margin-top:9px">
++ Crear partidillo independiente
+</button>
+</div>
+
+<p id="matchInfo" class="muted"></p>
+<label for="rival">Rival / Equipo contrario</label>
+<input id="rival" placeholder="Nombre del rival">
 </section>
 
 <section class="panel">
-<div id="reloj" class="reloj">00:00</div>
-<p id="estado" class="estado">PREPARAR PRIMERA PARTE</p>
-<p id="ayuda" class="ayuda"></p>
-<div class="botones">
-<button id="iniciar" class="verde" onclick="iniciarParte()">Iniciar parte</button>
-<button id="terminar" class="rojo" onclick="terminarParte()">Terminar parte</button>
-<button class="gris" onclick="deshacer()">Deshacer cambio</button>
+<div id="clock" class="clock">00:00</div>
+<p id="phase" class="center"><b>PREPARAR PRIMERA PARTE</b></p>
+<p id="hint" class="muted center">Selecciona 8 titulares.</p>
+
+<div class="actions">
+<button class="green" id="start">Iniciar primera parte</button>
+<button class="red" id="finish" hidden>Terminar primera parte</button>
+<button class="grey" id="undo">Deshacer cambio</button>
 </div>
 </section>
 
 <section class="panel">
 <h2>⚽ Marcador</h2>
-<div class="marcador">
-<div class="equipo">
-<div class="equipo-nombre">U.D. Santa Mariña C</div>
-<div class="goles" id="golesLocal">0</div>
+<div class="score">
+<div class="team">
+<strong>Santa Mariña C</strong>
+<b id="ours">0</b>
 </div>
-<strong>-</strong>
-<div class="equipo">
-<div class="equipo-nombre" id="rivalVista">Rival</div>
-<div class="goles" id="golesVisitante">0</div>
-</div>
-</div>
-
-<div class="parciales">
-<div class="parcial">
-<strong>1.ª parte</strong>
-<p id="parcial1">0 - 0</p>
-</div>
-<div class="parcial">
-<strong>2.ª parte</strong>
-<p id="parcial2">0 - 0</p>
+<b>—</b>
+<div class="team">
+<strong id="opponent">Rival</strong>
+<b id="theirs">0</b>
 </div>
 </div>
 
-<p class="ayuda">Los goles de nuestros jugadores actualizan automáticamente el marcador.</p>
-
-<div class="botones">
-<button class="verde" onclick="golEquipoSinAsignar()">+ Gol propio sin asignar</button>
-<button class="rojo" onclick="corregirGolPropio()">− Gol propio</button>
-<button class="azul" onclick="golRival(1)">+ Gol rival</button>
-<button class="gris" onclick="golRival(-1)">− Gol rival</button>
+<div class="halves">
+<div class="half">1.ª parte<br><b id="score1">0 - 0</b></div>
+<div class="half">2.ª parte<br><b id="score2">0 - 0</b></div>
 </div>
+
+<div class="actions">
+<button class="green" id="unassignedPlus">+ Gol propio sin asignar</button>
+<button class="red" id="unassignedMinus">− Gol propio sin asignar</button>
+<button id="rivalPlus">+ Gol rival</button>
+<button class="grey" id="rivalMinus">− Gol rival</button>
+</div>
+
+<p class="muted">
+Al pulsar «+ Gol» en un jugador también aumenta automáticamente el marcador.
+</p>
 </section>
 
 <section class="panel">
-<h2 id="tituloJugadores">Titulares: 0/8</h2>
-<div class="jugadores" id="jugadores"></div>
+<h2 id="playersTitle">Titulares: 0/8</h2>
+<div class="players" id="players"></div>
 </section>
 
 <section class="panel">
-<h2>📊 Estadísticas</h2>
-<div class="tabla">
+<h2>📊 Estadísticas en directo</h2>
+<div class="scroll">
 <table>
 <thead>
 <tr>
@@ -139,15 +154,19 @@ th:not(:first-child),td:not(:first-child){text-align:right}
 <th>👟</th>
 </tr>
 </thead>
-<tbody id="resumen"></tbody>
+<tbody id="summary"></tbody>
 </table>
 </div>
-<br>
-<div class="botones">
-<button class="verde" onclick="exportarCSV()">Exportar Excel</button>
-<button class="rojo" onclick="nuevoPartido()">Reiniciar partido seleccionado</button>
+
+<div class="actions">
+<button class="green" id="export">Exportar CSV (Excel)</button>
+<button class="red" id="reset">Reiniciar este partido</button>
 </div>
-<p class="ayuda">Los partidos se guardan individualmente en este navegador. Exporta los resultados para conservar una copia.</p>
+
+<p class="muted">
+Los tiempos aparecen como MM:SS. Cada partido se guarda por separado
+en este navegador. Exporta una copia para conservar los resultados.
+</p>
 </section>
 
 </main>
@@ -155,507 +174,655 @@ th:not(:first-child),td:not(:first-child){text-align:right}
 <script>
 "use strict";
 
-const PLANTILLA=[
-[1,"Mauro"],
-[3,"Javi"],
-[4,"Elías"],
-[5,"Brais"],
-[6,"Xabi"],
-[7,"Roque"],
-[8,"Leo Estévez"],
-[9,"Thiago"],
-[10,"Enzo"],
-[11,"Angelo"],
-[12,"Xes"],
-[14,"Leo Mendes"]
+const PEOPLE = [
+  [1,"Mauro"],
+  [3,"Javi"],
+  [4,"Elías"],
+  [5,"Brais"],
+  [6,"Xabi"],
+  [7,"Roque"],
+  [8,"Leo Estévez"],
+  [9,"Thiago"],
+  [10,"Enzo"],
+  [11,"Angelo"],
+  [12,"Xes"],
+  [14,"Leo Mendes"]
 ];
 
-const CALENDARIO=[
-{j:6,fecha:"08/11/2026",rival:"CF San Esteban",lugar:"Local"},
-{j:7,fecha:"15/11/2026",rival:"Moledo C.F. B",lugar:"Local"},
-{j:8,fecha:"22/11/2026",rival:"C.D. Nieto A",lugar:"Por confirmar"},
-{j:9,fecha:"29/11/2026",rival:"Club Peñasco A",lugar:"Por confirmar"}
+const GAMES = [
+  {
+    id:"j6",
+    name:"Jornada 6 · CF San Esteban",
+    date:"08/11/2026",
+    rival:"CF San Esteban",
+    place:"Local"
+  },
+  {
+    id:"j7",
+    name:"Jornada 7 · Moledo C.F. B",
+    date:"15/11/2026",
+    rival:"Moledo C.F. B",
+    place:"Local"
+  },
+  {
+    id:"j8",
+    name:"Jornada 8 · C.D. Nieto A",
+    date:"22/11/2026",
+    rival:"C.D. Nieto A",
+    place:"Por confirmar"
+  },
+  {
+    id:"j9",
+    name:"Jornada 9 · Club Peñasco A",
+    date:"29/11/2026",
+    rival:"Club Peñasco A",
+    place:"Por confirmar"
+  }
 ];
 
-const CLAVE="santa_marina_partidos_v3";
-const DURACION=1500;
-const MAX=8;
+const KEY = "santa_marina_partidos_v4";
+const DURATION = 1500;
+const MAX = 8;
 
-function estadoNuevo(partido){
-return {
-fase:"pre1",
-parte:1,
-segundos:0,
-ultima:null,
-seleccion:[],
-rival:partido.rival,
-marcador:{
-propios:[0,0],
-rivales:[0,0],
-sinAsignar:[0,0]
-},
-jugadores:PLANTILLA.map(([dorsal,nombre])=>({
-dorsal,nombre,campo:false,
-tiempos:[0,0],
-goles:[0,0],
-asistencias:[0,0]
-}))
+let store = {};
+
+try {
+  store = JSON.parse(localStorage.getItem(KEY) || "{}") || {};
+} catch(e) {
+  store = {};
+}
+
+let selectedId = "j6";
+let data;
+let history = [];
+
+const $ = id => document.getElementById(id);
+
+function fresh(game) {
+  return {
+    phase:"pre1",
+    half:0,
+    seconds:0,
+    stamp:null,
+    selected:[],
+    rival:game.rival || "",
+    score:{
+      ours:[0,0],
+      theirs:[0,0],
+      unassigned:[0,0]
+    },
+    players:PEOPLE.map(([number,name]) => ({
+      number,
+      name,
+      on:false,
+      time:[0,0],
+      goals:[0,0],
+      assists:[0,0]
+    }))
+  };
+}
+
+function gameById(id) {
+  return GAMES.find(g => g.id === id) ||
+    (store._training || []).find(g => g.id === id);
+}
+
+function save() {
+  store[selectedId] = data;
+  try {
+    localStorage.setItem(KEY,JSON.stringify(store));
+  } catch(e) {
+    console.warn("No se pudo guardar",e);
+  }
+}
+
+function total(pair) {
+  return pair[0] + pair[1];
+}
+
+function mmss(value) {
+  const secs = Math.max(0,Math.floor(value + 0.00001));
+  return String(Math.floor(secs/60)).padStart(2,"0") +
+    ":" + String(secs%60).padStart(2,"0");
+}
+
+function isSetup() {
+  return data.phase === "pre1" || data.phase === "break";
+}
+
+function player(n) {
+  return data.players.find(p => p.number === n);
+}
+
+function finishHalf() {
+  if(data.phase !== "playing") return;
+
+  data.stamp = null;
+  data.players.forEach(p => p.on = false);
+  data.selected = [];
+  data.phase = data.half === 0 ? "break" : "done";
+  history = [];
+  save();
+}
+
+function advance() {
+  if(!data || data.phase !== "playing") return;
+
+  const now = Date.now();
+  const elapsed = Math.max(
+    0,(now - (data.stamp ?? now))/1000
+  );
+  const step = Math.min(
+    elapsed,Math.max(0,DURATION-data.seconds)
+  );
+
+  data.seconds += step;
+  data.stamp = now;
+
+  data.players.forEach(p => {
+    if(p.on) p.time[data.half] += step;
+  });
+
+  if(data.seconds >= DURATION) finishHalf();
+}
+
+function selectMatch(id) {
+  if(data) {
+    advance();
+    save();
+  }
+
+  selectedId = id;
+  const game = gameById(id);
+  data = store[id] || fresh(game);
+  history = [];
+
+  advance();
+  save();
+  render();
+}
+
+function setupOptions() {
+  const s = $("match");
+  const previous = s.value || selectedId;
+
+  s.replaceChildren();
+
+  for(const g of GAMES) {
+    s.add(new Option(g.name,g.id));
+  }
+
+  for(const g of store._training || []) {
+    s.add(new Option(
+      "Entreno · " + g.date + " · " + g.name,
+      g.id
+    ));
+  }
+
+  s.add(new Option(
+    "＋ Crear nuevo partidillo de entreno",
+    "new-training"
+  ));
+
+  s.value = previous === "new-training"
+    ? "new-training"
+    : (gameById(previous) ? previous : "j6");
+}
+
+function togglePlayer(n) {
+  advance();
+  const p = player(n);
+
+  if(isSetup()) {
+    const k = data.selected.indexOf(n);
+
+    if(k >= 0) {
+      data.selected.splice(k,1);
+    } else {
+      if(data.selected.length >= MAX) {
+        alert("Solo puedes seleccionar 8 titulares.");
+        return;
+      }
+      data.selected.push(n);
+    }
+
+  } else if(data.phase === "playing") {
+    if(!p.on &&
+       data.players.filter(x => x.on).length >= MAX) {
+      alert("Primero saca a un jugador.");
+      return;
+    }
+
+    history.push(data.players.map(x => x.on));
+    p.on = !p.on;
+
+  } else {
+    return;
+  }
+
+  save();
+  render();
+}
+
+function start() {
+  advance();
+
+  if(!isSetup()) return;
+
+  if(data.selected.length !== MAX) {
+    alert("Selecciona exactamente 8 titulares.");
+    return;
+  }
+
+  data.half = data.phase === "pre1" ? 0 : 1;
+  data.seconds = 0;
+  data.stamp = Date.now();
+  data.phase = "playing";
+
+  data.players.forEach(p => {
+    p.on = data.selected.includes(p.number);
+  });
+
+  data.selected = [];
+  history = [];
+
+  save();
+  render();
+}
+
+function end() {
+  advance();
+  if(data.phase === "playing") finishHalf();
+  render();
+}
+
+function undo() {
+  advance();
+
+  if(data.phase !== "playing" || !history.length) {
+    alert("No hay sustituciones para deshacer.");
+    return;
+  }
+
+  const old = history.pop();
+  data.players.forEach((p,i) => p.on = old[i]);
+
+  save();
+  render();
+}
+
+// Los goles del jugador actualizan el marcador.
+function addGoal(n,amount) {
+  advance();
+
+  const p = player(n);
+  const h = data.half;
+
+  if(amount < 0 && p.goals[h] < 1) return;
+
+  p.goals[h] += amount;
+  data.score.ours[h] += amount;
+
+  save();
+  render();
+}
+
+function addAssist(n,amount) {
+  advance();
+
+  const p = player(n);
+  const h = data.half;
+
+  p.assists[h] = Math.max(
+    0,p.assists[h] + amount
+  );
+
+  save();
+  render();
+}
+
+function unassigned(amount) {
+  advance();
+
+  const h = data.half;
+
+  if(amount < 0 && !data.score.unassigned[h]) return;
+
+  data.score.unassigned[h] += amount;
+  data.score.ours[h] += amount;
+
+  save();
+  render();
+}
+
+function rivalGoal(amount) {
+  advance();
+
+  const h = data.half;
+
+  data.score.theirs[h] = Math.max(
+    0,data.score.theirs[h] + amount
+  );
+
+  save();
+  render();
+}
+
+function btn(label,cls,fn) {
+  const b = document.createElement("button");
+  b.textContent = label;
+  b.className = cls;
+  b.type = "button";
+  b.onclick = fn;
+  return b;
+}
+
+function render() {
+  const game = gameById(selectedId);
+
+  $("match").value = selectedId;
+  $("trainingFields").style.display = "none";
+  $("matchInfo").textContent =
+    `${game.date} · ${game.place || "Entrenamiento"}`;
+
+  if(document.activeElement !== $("rival")) {
+    $("rival").value = data.rival;
+  }
+
+  $("opponent").textContent = data.rival || "Rival";
+
+  $("clock").textContent = mmss(
+    data.half * DURATION + data.seconds
+  );
+
+  $("start").hidden = !isSetup();
+  $("finish").hidden = data.phase !== "playing";
+
+  const phases = {
+    pre1:"PREPARAR PRIMERA PARTE",
+    playing:data.half === 0
+      ? "PRIMERA PARTE EN JUEGO"
+      : "SEGUNDA PARTE EN JUEGO",
+    break:"DESCANSO · RELOJ PARADO",
+    done:"PARTIDO FINALIZADO"
+  };
+
+  $("phase").textContent = phases[data.phase];
+
+  $("start").textContent = data.phase === "break"
+    ? "Iniciar segunda parte"
+    : "Iniciar primera parte";
+
+  $("finish").textContent = data.half === 0
+    ? "Terminar primera parte"
+    : "Finalizar partido";
+
+  $("hint").textContent = isSetup()
+    ? "Selecciona exactamente 8 titulares."
+    : data.phase === "playing"
+      ? "Saca primero a un jugador y luego mete a otro."
+      : "Exporta los resultados del partido.";
+
+  $("ours").textContent = total(data.score.ours);
+  $("theirs").textContent = total(data.score.theirs);
+
+  $("score1").textContent =
+    `${data.score.ours[0]} - ${data.score.theirs[0]}`;
+
+  $("score2").textContent =
+    `${data.score.ours[1]} - ${data.score.theirs[1]}`;
+
+  $("playersTitle").textContent = isSetup()
+    ? `Titulares: ${data.selected.length}/8`
+    : `En campo: ${data.players.filter(p => p.on).length}/8`;
+
+  const list = $("players");
+  list.replaceChildren();
+
+  for(const p of data.players) {
+    const chosen = data.selected.includes(p.number);
+    const card = document.createElement("div");
+
+    card.className = "player" +
+      (data.phase === "playing" && p.on ? " playing" : "") +
+      (isSetup() && chosen ? " selected" : "");
+
+    const title = document.createElement("h3");
+    title.textContent = p.number + " · " + p.name;
+
+    const timer = document.createElement("div");
+    timer.className = "timer";
+    timer.textContent = "⏱ " + mmss(total(p.time));
+
+    const status = document.createElement("div");
+    status.className = "status";
+
+    status.textContent = isSetup()
+      ? (chosen ? "✓ TITULAR SELECCIONADO" : "Seleccionar titular")
+      : data.phase === "playing"
+        ? (p.on
+          ? "🟢 EN CAMPO · EN DIRECTO"
+          : "⚪ BANQUILLO · PARADO")
+        : "PARTIDO FINALIZADO";
+
+    const toggle = btn(
+      isSetup()
+        ? (chosen ? "✓ TITULAR" : "SELECCIONAR")
+        : data.phase === "playing"
+          ? (p.on ? "SACAR" : "METER")
+          : "FINALIZADO",
+      "toggle " + (p.on ? "green" : "grey"),
+      () => togglePlayer(p.number)
+    );
+
+    toggle.disabled = data.phase === "done";
+
+    card.append(title,timer,status,toggle);
+
+    const g = document.createElement("div");
+    g.className = "stat";
+    g.textContent = "⚽ Goles: " + total(p.goals);
+
+    const gb = document.createElement("div");
+    gb.className = "duo";
+    gb.append(
+      btn("+ Gol","green",() => addGoal(p.number,1)),
+      btn("− Gol","red",() => addGoal(p.number,-1))
+    );
+
+    const a = document.createElement("div");
+    a.className = "stat";
+    a.textContent = "👟 Asistencias: " + total(p.assists);
+
+    const ab = document.createElement("div");
+    ab.className = "duo";
+    ab.append(
+      btn("+ Asist.","",() => addAssist(p.number,1)),
+      btn("− Asist.","grey",() => addAssist(p.number,-1))
+    );
+
+    card.append(g,gb,a,ab);
+    list.append(card);
+  }
+
+  // Tabla de minutos en directo, formato MM:SS.
+  const summary = $("summary");
+  summary.replaceChildren();
+
+  for(const p of data.players) {
+    const tr = document.createElement("tr");
+
+    if(data.phase === "playing" && p.on) {
+      tr.className = "playing-row";
+    }
+
+    const values = [
+      p.number + " · " + p.name,
+      mmss(p.time[0]),
+      mmss(p.time[1]),
+      mmss(total(p.time)),
+      total(p.goals),
+      total(p.assists)
+    ];
+
+    for(const v of values) {
+      const td = document.createElement("td");
+      td.textContent = v;
+      tr.append(td);
+    }
+
+    summary.append(tr);
+  }
+}
+
+function csv() {
+  advance();
+  save();
+
+  const lines = [[
+    "Dorsal",
+    "Jugador",
+    "1ª parte (MM:SS)",
+    "2ª parte (MM:SS)",
+    "Total (MM:SS)",
+    "Goles",
+    "Asistencias"
+  ]];
+
+  for(const p of data.players) {
+    lines.push([
+      p.number,
+      p.name,
+      mmss(p.time[0]),
+      mmss(p.time[1]),
+      mmss(total(p.time)),
+      total(p.goals),
+      total(p.assists)
+    ]);
+  }
+
+  const g = gameById(selectedId);
+
+  lines.push(
+    [],
+    ["Partido",g.name],
+    ["Fecha",g.date],
+    ["Rival",data.rival],
+    ["Marcador",`${total(data.score.ours)} - ${total(data.score.theirs)}`],
+    ["Primera parte",`${data.score.ours[0]} - ${data.score.theirs[0]}`],
+    ["Segunda parte",`${data.score.ours[1]} - ${data.score.theirs[1]}`]
+  );
+
+  const text = "\uFEFF" + lines.map(row =>
+    row.map(v =>
+      String(v ?? "").replaceAll(";",",").replaceAll("\n"," ")
+    ).join(";")
+  ).join("\r\n");
+
+  const url = URL.createObjectURL(
+    new Blob([text],{type:"text/csv;charset=utf-8"})
+  );
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "SantaMarina_" + selectedId + ".csv";
+
+  document.body.append(link);
+  link.click();
+  link.remove();
+
+  setTimeout(() => URL.revokeObjectURL(url),3000);
+}
+
+// Selector de jornadas y entrenamientos.
+$("match").addEventListener("change",e => {
+  if(e.target.value === "new-training") {
+    $("trainingFields").style.display = "block";
+    $("matchInfo").textContent =
+      "Introduce fecha y nombre del partidillo.";
+    return;
+  }
+
+  selectMatch(e.target.value);
+});
+
+// Crear entrenamiento independiente.
+$("createTraining").onclick = () => {
+  const date = $("trainingDate").value;
+  const name = $("trainingName").value.trim();
+
+  if(!date || !name) {
+    alert("Escribe la fecha y el nombre del partidillo.");
+    return;
+  }
+
+  const id = "train-" + Date.now();
+
+  const game = {
+    id,
+    date,
+    name,
+    rival:name,
+    place:"Entrenamiento"
+  };
+
+  store._training = store._training || [];
+  store._training.push(game);
+
+  setupOptions();
+  selectMatch(id);
+
+  $("trainingName").value = "";
 };
-}
 
-let almacen={};
-try{
-almacen=JSON.parse(localStorage.getItem(CLAVE)||"{}");
-}catch(e){almacen={};}
-
-let jornada=6;
-let datos;
-let historial=[];
-
-function guardar(){
-almacen[jornada]=datos;
-try{
-localStorage.setItem(CLAVE,JSON.stringify(almacen));
-}catch(e){console.warn(e);}
-}
-
-function partidaActual(){
-return CALENDARIO.find(p=>p.j===jornada);
-}
-
-function cargarPartido(j){
-jornada=j;
-datos=almacen[j]||estadoNuevo(partidaActual());
-historial=[];
-avanzarTiempo();
-guardar();
-pintar();
-}
-
-function cambiarPartido(){
-avanzarTiempo();
-guardar();
-const j=Number(document.getElementById("calendario").value);
-cargarPartido(j);
-}
-
-function jugador(dorsal){
-return datos.jugadores.find(x=>x.dorsal===dorsal);
-}
-
-function preparando(){
-return datos.fase==="pre1"||datos.fase==="descanso";
-}
-
-function avanzarTiempo(){
-if(!datos||datos.fase!=="jugando")return;
-
-const ahora=Date.now();
-const delta=Math.max(0,(ahora-(datos.ultima||ahora))/1000);
-const incremento=Math.min(delta,Math.max(0,DURACION-datos.segundos));
-
-datos.segundos+=incremento;
-datos.ultima=ahora;
-
-for(const j of datos.jugadores){
-if(j.campo)j.tiempos[datos.parte-1]+=incremento;
-}
-
-if(datos.segundos>=DURACION){
-finalizarParte();
-}
-}
-
-function formato(s){
-const n=Math.floor(s);
-return String(Math.floor(n/60)).padStart(2,"0")+":"+
-String(n%60).padStart(2,"0");
-}
-
-function minutos(s){
-return (s/60).toFixed(1).replace(".",",");
-}
-
-function suma(a){
-return a[0]+a[1];
-}
-
-function guardarRival(){
-datos.rival=document.getElementById("rival").value.trim();
-guardar();
-document.getElementById("rivalVista").textContent=datos.rival||"Rival";
-}
-
-function tocarJugador(dorsal){
-avanzarTiempo();
-const j=jugador(dorsal);
-if(datos.fase==="jugando"){
-const activos=datos.jugadores.filter(x=>x.campo).length;
-if(!j.campo&&activos>=MAX){
-alert("Primero saca a un jugador.");
-return;
-}
-historial.push(datos.jugadores.map(x=>x.campo));
-j.campo=!j.campo;
-}else if(preparando()){
-const i=datos.seleccion.indexOf(dorsal);
-if(i>=0)datos.seleccion.splice(i,1);
-else{
-if(datos.seleccion.length>=MAX){
-alert("Selecciona solo 8 titulares.");
-return;
-}
-datos.seleccion.push(dorsal);
-}
-}else return;
-guardar();
-pintar();
-}
-
-function iniciarParte(){
-avanzarTiempo();
-if(!preparando())return;
-if(datos.seleccion.length!==MAX){
-alert("Selecciona exactamente 8 titulares.");
-return;
-}
-
-datos.parte=datos.fase==="pre1"?1:2;
-datos.segundos=0;
-datos.ultima=Date.now();
-datos.fase="jugando";
-for(const j of datos.jugadores){
-j.campo=datos.seleccion.includes(j.dorsal);
-}
-datos.seleccion=[];
-historial=[];
-guardar();
-pintar();
-}
-
-function finalizarParte(){
-datos.ultima=null;
-for(const j of datos.jugadores)j.campo=false;
-datos.seleccion=[];
-datos.fase=datos.parte===1?"descanso":"final";
-historial=[];
-guardar();
-}
-
-function terminarParte(){
-if(datos.fase!=="jugando")return;
-avanzarTiempo();
-if(datos.fase==="jugando")finalizarParte();
-pintar();
-}
-
-function deshacer(){
-avanzarTiempo();
-if(datos.fase!=="jugando"||!historial.length){
-alert("No hay cambios para deshacer.");
-return;
-}
-const anterior=historial.pop();
-datos.jugadores.forEach((j,i)=>j.campo=anterior[i]);
-guardar();
-pintar();
-}
-
-function parteEstadistica(){
-return datos.parte-1;
-}
-
-// Un gol de un niño suma automáticamente al marcador.
-function golJugador(dorsal,cantidad){
-avanzarTiempo();
-const j=jugador(dorsal);
-const p=parteEstadistica();
-
-if(cantidad<0&&j.goles[p]===0){
-alert("Este jugador no tiene goles registrados en esta parte.");
-return;
-}
-
-j.goles[p]+=cantidad;
-datos.marcador.propios[p]+=cantidad;
-
-guardar();
-pintar();
-}
-
-function asistencia(dorsal,cantidad){
-avanzarTiempo();
-const j=jugador(dorsal);
-const p=parteEstadistica();
-j.asistencias[p]=Math.max(0,j.asistencias[p]+cantidad);
-guardar();
-pintar();
-}
-
-function golEquipoSinAsignar(){
-avanzarTiempo();
-const p=parteEstadistica();
-datos.marcador.sinAsignar[p]++;
-datos.marcador.propios[p]++;
-guardar();
-pintar();
-}
-
-function corregirGolPropio(){
-avanzarTiempo();
-const p=parteEstadistica();
-
-if(datos.marcador.sinAsignar[p]>0){
-datos.marcador.sinAsignar[p]--;
-datos.marcador.propios[p]--;
-}else{
-alert("Para quitar un gol asignado, usa − Gol en la tarjeta del jugador.");
-return;
-}
-
-guardar();
-pintar();
-}
-
-function golRival(cantidad){
-avanzarTiempo();
-const p=parteEstadistica();
-datos.marcador.rivales[p]=Math.max(
-0,datos.marcador.rivales[p]+cantidad
-);
-guardar();
-pintar();
-}
-
-function nuevoPartido(){
-if(!confirm("¿Borrar las estadísticas de esta jornada?"))return;
-datos=estadoNuevo(partidaActual());
-historial=[];
-guardar();
-pintar();
-}
-
-function crearBoton(texto,clase,funcion){
-const b=document.createElement("button");
-b.type="button";
-b.className=clase;
-b.textContent=texto;
-b.onclick=funcion;
-return b;
-}
-
-function pintar(){
-const enJuego=datos.fase==="jugando";
-const enPreparacion=preparando();
-
-const relojTotal=datos.parte===2?
-DURACION+datos.segundos:datos.segundos;
-
-document.getElementById("reloj").textContent=formato(relojTotal);
-
-const estado=document.getElementById("estado");
-const iniciar=document.getElementById("iniciar");
-const terminar=document.getElementById("terminar");
-
-iniciar.style.display=enPreparacion?"":"none";
-terminar.style.display=enJuego?"":"none";
-
-if(datos.fase==="pre1"){
-estado.textContent="PREPARAR PRIMERA PARTE";
-iniciar.textContent="Iniciar primera parte";
-}else if(datos.fase==="descanso"){
-estado.textContent="DESCANSO · RELOJ PARADO";
-iniciar.textContent="Iniciar segunda parte";
-}else if(datos.fase==="jugando"){
-estado.textContent=datos.parte===1?
-"PRIMERA PARTE EN JUEGO":"SEGUNDA PARTE EN JUEGO";
-terminar.textContent=datos.parte===1?
-"Terminar primera parte":"Finalizar partido";
-}else{
-estado.textContent="PARTIDO FINALIZADO";
-}
-
-document.getElementById("ayuda").textContent=enPreparacion?
-"Selecciona exactamente 8 titulares.":enJuego?
-"Toca SACAR o METER. Los cronómetros se actualizan solos.":
-"Partido terminado. Puedes exportar las estadísticas.";
-
-const me=datos.marcador;
-document.getElementById("golesLocal").textContent=suma(me.propios);
-document.getElementById("golesVisitante").textContent=suma(me.rivales);
-document.getElementById("parcial1").textContent=
-me.propios[0]+" - "+me.rivales[0];
-document.getElementById("parcial2").textContent=
-me.propios[1]+" - "+me.rivales[1];
-
-document.getElementById("rivalVista").textContent=datos.rival||"Rival";
-const inputRival=document.getElementById("rival");
-if(document.activeElement!==inputRival)inputRival.value=datos.rival||"";
-
-const activos=datos.jugadores.filter(j=>j.campo).length;
-document.getElementById("tituloJugadores").textContent=
-enPreparacion?"Titulares: "+datos.seleccion.length+"/8":
-"Jugadores en campo: "+activos+"/8";
-
-const contenedor=document.getElementById("jugadores");
-contenedor.replaceChildren();
-
-for(const j of datos.jugadores){
-const elegido=datos.seleccion.includes(j.dorsal);
-const tarjeta=document.createElement("div");
-tarjeta.className="jugador"+
-(enJuego&&j.campo?" campo":"")+
-(enPreparacion&&elegido?" elegido":"");
-
-const nombre=document.createElement("div");
-nombre.className="nombre";
-nombre.textContent=j.dorsal+" · "+j.nombre;
-
-const crono=document.createElement("div");
-crono.className="crono"+(enJuego&&j.campo?" activo":"");
-crono.textContent="⏱ "+formato(suma(j.tiempos));
-
-const situacion=document.createElement("div");
-situacion.className="estado-jugador";
-situacion.textContent=enJuego?
-(j.campo?"🟢 CRONO EN MARCHA":"⚪ CRONO PARADO"):
-enPreparacion?(elegido?"✓ TITULAR SELECCIONADO":"Seleccionar titular"):
-"PARTIDO FINALIZADO";
-
-const accion=crearBoton(
-enPreparacion?(elegido?"✓ TITULAR":"SELECCIONAR"):
-enJuego?(j.campo?"SACAR":"METER"):"FINALIZADO",
-"accion "+(j.campo?"verde":"gris"),
-()=>tocarJugador(j.dorsal)
-);
-accion.disabled=datos.fase==="final";
-
-const goles=document.createElement("div");
-goles.className="contadores";
-goles.textContent="⚽ Goles: "+suma(j.goles);
-
-const controlesGol=document.createElement("div");
-controlesGol.className="dos";
-controlesGol.append(
-crearBoton("+ Gol","verde",()=>golJugador(j.dorsal,1)),
-crearBoton("− Gol","rojo",()=>golJugador(j.dorsal,-1))
-);
-
-const asistencias=document.createElement("div");
-asistencias.className="contadores";
-asistencias.textContent="👟 Asistencias: "+suma(j.asistencias);
-
-const controlesAsistencia=document.createElement("div");
-controlesAsistencia.className="dos";
-controlesAsistencia.append(
-crearBoton("+ Asist.","azul",()=>asistencia(j.dorsal,1)),
-crearBoton("− Asist.","gris",()=>asistencia(j.dorsal,-1))
-);
-
-tarjeta.append(
-nombre,crono,situacion,accion,
-goles,controlesGol,asistencias,controlesAsistencia
-);
-contenedor.appendChild(tarjeta);
-}
-
-const resumen=document.getElementById("resumen");
-resumen.replaceChildren();
-
-for(const j of datos.jugadores){
-const tr=document.createElement("tr");
-const valores=[
-j.dorsal+" · "+j.nombre,
-minutos(j.tiempos[0]),
-minutos(j.tiempos[1]),
-minutos(suma(j.tiempos)),
-suma(j.goles),
-suma(j.asistencias)
-];
-for(const v of valores){
-const td=document.createElement("td");
-td.textContent=v;
-tr.appendChild(td);
-}
-resumen.appendChild(tr);
-}
-}
-
-function exportarCSV(){
-avanzarTiempo();
-guardar();
-
-const filas=[[
-"Dorsal","Jugador","1ª parte min","2ª parte min",
-"Total min","Goles","Asistencias"
-]];
-
-for(const j of datos.jugadores){
-filas.push([
-j.dorsal,j.nombre,
-minutos(j.tiempos[0]),
-minutos(j.tiempos[1]),
-minutos(suma(j.tiempos)),
-suma(j.goles),
-suma(j.asistencias)
-]);
-}
-
-filas.push([]);
-filas.push(["Jornada",jornada]);
-filas.push(["Rival",datos.rival]);
-filas.push(["Marcador",suma(datos.marcador.propios)+" - "+
-suma(datos.marcador.rivales)]);
-filas.push(["Primera parte",
-datos.marcador.propios[0]+" - "+datos.marcador.rivales[0]]);
-filas.push(["Segunda parte",
-datos.marcador.propios[1]+" - "+datos.marcador.rivales[1]]);
-
-const contenido="\uFEFF"+filas.map(f=>f.join(";")).join("\r\n");
-const blob=new Blob([contenido],{type:"text/csv;charset=utf-8"});
-const url=URL.createObjectURL(blob);
-const a=document.createElement("a");
-a.href=url;
-a.download="SantaMarina_Jornada_"+jornada+".csv";
-document.body.appendChild(a);
-a.click();
-a.remove();
-setTimeout(()=>URL.revokeObjectURL(url),1000);
-}
-
-const selector=document.getElementById("calendario");
-for(const partido of CALENDARIO){
-const opcion=document.createElement("option");
-opcion.value=partido.j;
-opcion.textContent="Jornada "+partido.j+" · "+
-partido.rival+" · "+partido.fecha;
-selector.appendChild(opcion);
-}
-
-function actualizarInfo(){
-const p=partidaActual();
-document.getElementById("informacion").textContent=
-p.fecha+" · "+p.lugar;
-}
-selector.addEventListener("change",actualizarInfo);
-
-cargarPartido(6);
-actualizarInfo();
-
-setInterval(()=>{
-if(datos.fase==="jugando"){
-avanzarTiempo();
-guardar();
-pintar();
-}
+$("rival").addEventListener("change",e => {
+  data.rival = e.target.value.trim();
+  save();
+  render();
+});
+
+$("start").onclick = start;
+$("finish").onclick = end;
+$("undo").onclick = undo;
+
+$("unassignedPlus").onclick = () => unassigned(1);
+$("unassignedMinus").onclick = () => unassigned(-1);
+
+$("rivalPlus").onclick = () => rivalGoal(1);
+$("rivalMinus").onclick = () => rivalGoal(-1);
+
+$("export").onclick = csv;
+
+$("reset").onclick = () => {
+  if(!confirm(
+    "¿Borrar únicamente los datos de este partido? Exporta antes si quieres conservarlos."
+  )) return;
+
+  data = fresh(gameById(selectedId));
+  history = [];
+  save();
+  render();
+};
+
+setupOptions();
+selectMatch("j6");
+
+// Actualiza automáticamente los cronómetros cada segundo.
+setInterval(() => {
+  if(data.phase === "playing") {
+    advance();
+    save();
+    render();
+  }
 },1000);
 
-document.addEventListener("visibilitychange",()=>{
-if(!document.hidden){
-avanzarTiempo();
-guardar();
-pintar();
-}
+// Recupera el tiempo transcurrido al volver a Safari.
+document.addEventListener("visibilitychange",() => {
+  if(!document.hidden) {
+    advance();
+    save();
+    render();
+  }
 });
 </script>
 </body>
