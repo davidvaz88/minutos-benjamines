@@ -1,216 +1,197 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#142948">
 <title>Benxamín C - U.D. Santa Mariña</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#edf2f8;color:#172b43;font:15px system-ui,Arial,sans-serif}
-header{background:#142948;color:white;padding:15px;display:flex;align-items:center;justify-content:center;gap:12px}
-header img{width:62px;height:70px;object-fit:contain}
-header h1{font-size:19px;margin:0}
-header p{margin:4px 0;font-size:12px}
-main{max-width:1050px;margin:auto;padding:12px}
-.panel{background:white;border-radius:13px;padding:15px;margin-bottom:12px;box-shadow:0 1px 7px #14294817}
-h2{font-size:18px;margin:0 0 12px}
-label{display:block;font-weight:650;margin:9px 0 5px}
-input,select{font:inherit;width:100%;border:1px solid #b8c8d8;border-radius:9px;padding:11px;background:white;color:#172b43}
-button{border:0;border-radius:9px;padding:11px 10px;color:white;background:#2563ad;font:700 14px system-ui;cursor:pointer;touch-action:manipulation}
-button:disabled{opacity:.4}
-[hidden]{display:none!important}
-.green{background:#187b48}
-.red{background:#b12e42}
-.grey{background:#576d84}
-.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.muted{color:#64748b;font-size:13px}
-.clock{text-align:center;font-size:49px;font-weight:850;font-variant-numeric:tabular-nums}
-.center{text-align:center}
-.score{display:grid;grid-template-columns:1fr auto 1fr;gap:9px;align-items:center;text-align:center}
-.team{background:#f0f4fa;border-radius:11px;padding:12px 6px}
-.team strong{font-size:13px;display:block;min-height:33px}
-.team b{display:block;font-size:46px}
-.halves{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.half{background:#f0f4fa;text-align:center;padding:10px;border-radius:9px}
-.players{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.player{background:#eef2f8;border:2px solid transparent;border-radius:12px;padding:10px;min-width:0}
-.player.playing{background:#daf7e6;border-color:#187b48}
-.player.selected{background:#deebff;border-color:#2563ad}
-.player h3{font-size:16px;margin:0;min-height:38px}
-.player .timer{font-size:27px;text-align:center;font-weight:850;font-variant-numeric:tabular-nums;margin:8px 0}
-.player.playing .timer{color:#147546}
-.player .status{text-align:center;font-size:11px;min-height:28px}
-.player .toggle{width:100%;margin:8px 0}
-.player .stat{text-align:center;font-weight:700;font-size:13px;margin:10px 0 5px}
-.duo{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-.duo button{padding:9px 2px;font-size:12px}
-.scroll{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:13px}
-td,th{padding:9px 5px;border-bottom:1px solid #dde4eb;text-align:right;white-space:nowrap}
-td:first-child,th:first-child{text-align:left}
-tr.playing-row{background:#e3f8eb}
-.line{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-@media(min-width:720px){
-.players{grid-template-columns:repeat(3,minmax(0,1fr))}
+body{
+ margin:0;background:#edf2f7;color:#172b43;
+ font:14px system-ui,Arial,sans-serif
 }
-@media(max-width:375px){
-.player .timer{font-size:23px}
-.player h3{font-size:14px}
-.line{grid-template-columns:1fr}
+header{
+ background:#142948;color:white;padding:8px;
+ display:flex;align-items:center;justify-content:center;gap:10px
+}
+header img{width:42px;height:48px;object-fit:contain}
+header h1{font-size:17px;margin:0}
+header small{font-size:11px}
+main{max-width:1150px;margin:auto;padding:7px}
+.panel{
+ background:white;border-radius:10px;padding:10px;
+ margin-bottom:7px;box-shadow:0 1px 5px #0001
+}
+h2{font-size:16px;margin:3px 0 8px}
+button{
+ border:0;border-radius:8px;padding:9px 8px;
+ background:#245aaa;color:white;font-weight:700;
+ font-size:12px;cursor:pointer;touch-action:manipulation
+}
+button:disabled{opacity:.4}
+.green{background:#168051}
+.red{background:#b32f40}
+.grey{background:#657386}
+input,select{
+ width:100%;max-width:100%;padding:9px;
+ border:1px solid #cbd5e1;border-radius:8px;font-size:15px
+}
+label{display:block;margin:7px 0;font-weight:600}
+.buttons{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.muted{font-size:11px;color:#526479;margin:5px 0}
+.center{text-align:center}
+.clock{
+ font-size:39px;font-weight:850;text-align:center;
+ font-variant-numeric:tabular-nums
+}
+.topbar{display:grid;grid-template-columns:1fr;gap:7px}
+.topbar .panel{margin:0}
+.score{
+ display:grid;grid-template-columns:1fr auto 1fr;
+ gap:7px;align-items:center;text-align:center
+}
+.score div{background:#eef2f7;padding:7px;border-radius:9px}
+.score strong{display:block;font-size:32px}
+.players{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:6px
+}
+.player{
+ min-width:0;background:#edf2f8;
+ border:2px solid transparent;border-radius:9px;padding:7px
+}
+.player.on{background:#dcf7e7;border-color:#168051}
+.player.selected{background:#dceafe;border-color:#245aaa}
+.player h3{font-size:14px;margin:0;min-height:18px}
+.timer{
+ text-align:center;font-size:25px;font-weight:850;
+ font-variant-numeric:tabular-nums;margin:5px 0
+}
+.player.on .timer{color:#168051}
+.player .status{text-align:center;font-size:11px;min-height:15px}
+.wide{width:100%;margin:6px 0}
+.twobuttons{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.twobuttons button{padding:8px 2px;font-size:11px}
+.stat{text-align:center;font-size:12px;margin:7px 0 4px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:12px}
+th,td{
+ padding:8px 4px;border-bottom:1px solid #dbe2e9;
+ text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums
+}
+th:first-child,td:first-child{text-align:left}
+[hidden]{display:none!important}
+summary{cursor:pointer;font-weight:750}
+.line{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(min-width:650px){
+ .topbar{grid-template-columns:1fr 1fr}
+ .players{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
 </style>
 </head>
+
 <body>
 
 <header>
 <img src="escudo-ud-santa-marina.png"
-alt="Escudo U.D. Santa Mariña"
-onerror="this.style.display='none'">
+ alt="Escudo Santa Mariña"
+ onerror="this.style.display='none'">
 <div>
 <h1>Benxamín C - U.D. Santa Mariña</h1>
-<p>Minutos · Goles · Asistencias</p>
+<small>Minutos · Goles · Asistencias</small>
 </div>
 </header>
 
 <main>
 
-<section class="panel">
-<h2>☁️ Sincronización</h2>
-<p id="syncStatus" class="muted">Modo local</p>
-
-<div id="loginBox">
-<label>Correo electrónico</label>
-<input type="email" id="email" placeholder="Correo del entrenador">
-
+<details class="panel">
+<summary>☁️ <span id="sync">Modo local</span></summary>
+<label>Correo</label>
+<input id="email" type="email">
 <label>Contraseña</label>
-<input type="password" id="password" placeholder="Contraseña">
-
-<div class="actions">
-<button id="loginBtn">Iniciar sesión</button>
-<button id="registerBtn" class="grey">Crear cuenta</button>
-<button id="logoutBtn" class="red" hidden>Cerrar sesión</button>
+<input id="password" type="password">
+<div class="buttons">
+<button id="signIn">Entrar</button>
+<button id="signUp" class="grey">Crear cuenta</button>
+<button id="signOut" class="red" hidden>Cerrar sesión</button>
 </div>
-</div>
-
-<p class="muted">
-Utiliza la misma cuenta en el PC y en el iPhone.
-Sin Firebase, los datos se guardan únicamente en este navegador.
-</p>
-</section>
+</details>
 
 <section class="panel">
-<h2>📅 Partido o entrenamiento</h2>
+<h2>📅 Partido / Entrenamiento</h2>
+<select id="matches"></select>
 
-<label>Seleccionar partido</label>
-<select id="matchSelect"></select>
-
-<div id="trainingFields" hidden>
-<h3>Nuevo partidillo de entrenamiento</h3>
-
+<div id="trainingCreate" hidden>
 <label>Fecha</label>
-<input type="date" id="trainingDate">
-
-<label>Nombre del entrenamiento</label>
-<input id="trainingName" placeholder="Ej.: Entreno jueves">
-
-<label>Duración (minutos)</label>
-<input type="number" id="trainingMinutes"
-min="1" max="180" value="30">
-
-<label>Equipo contrario</label>
-<input id="trainingRival" placeholder="Rojo vs Azul">
-
-<div class="actions">
-<button class="green" id="createTraining">
-Crear partidillo
-</button>
-</div>
+<input id="trainDate" type="date">
+<label>Nombre</label>
+<input id="trainName" placeholder="Entreno del jueves">
+<label>Duración en minutos</label>
+<input id="trainMinutes" type="number" value="30" min="1" max="180">
+<label>Rival / Equipos</label>
+<input id="trainRival" placeholder="Rojo vs Azul">
+<button id="addTraining" class="green">Crear entrenamiento</button>
 </div>
 
 <p id="matchInfo" class="muted"></p>
+<button id="deleteTraining" class="red" hidden>
+🗑 Eliminar este partidillo
+</button>
 
-<label>Rival</label>
+<label>Rival
 <input id="rival" placeholder="Nombre del rival">
+</label>
 </section>
+
+<div class="topbar">
 
 <section class="panel">
 <div id="clock" class="clock">00:00</div>
-<h3 id="phase" class="center">PREPARAR PRIMERA PARTE</h3>
+<h3 id="phase" class="center">PREPARAR PARTIDO</h3>
 <p id="hint" class="muted center"></p>
-
-<div class="actions">
-<button class="green" id="start">Iniciar</button>
-<button class="red" id="finish" hidden>Terminar</button>
-<button class="grey" id="undo">Deshacer cambio</button>
+<div class="buttons">
+<button id="start" class="green">Iniciar</button>
+<button id="finish" class="red" hidden>Terminar</button>
+<button id="undo" class="grey">Deshacer cambio</button>
 </div>
 </section>
 
 <section class="panel">
 <h2>⚽ Marcador</h2>
-
 <div class="score">
-<div class="team">
-<strong>U.D. Santa Mariña C</strong>
-<b id="ours">0</b>
-</div>
-
+<div>Santa Mariña<strong id="ours">0</strong></div>
 <b>—</b>
-
-<div class="team">
-<strong id="opponent">Rival</strong>
-<b id="theirs">0</b>
+<div><span id="rivalTitle">Rival</span>
+<strong id="theirs">0</strong></div>
 </div>
+<p id="partials" class="muted center"></p>
+<div class="buttons">
+<button id="ownPlus" class="green">+ Gol propio</button>
+<button id="ownMinus" class="red">− Gol propio</button>
+<button id="oppPlus">+ Gol rival</button>
+<button id="oppMinus" class="grey">− Gol rival</button>
 </div>
-
-<div id="halves" class="halves">
-<div class="half">
-1.ª parte
-<br>
-<b id="score1">0 - 0</b>
-</div>
-
-<div class="half">
-2.ª parte
-<br>
-<b id="score2">0 - 0</b>
-</div>
-</div>
-
-<div class="actions">
-<button class="green" id="ownPlus">
-+ Gol propio sin asignar
-</button>
-
-<button class="red" id="ownMinus">
-− Gol propio sin asignar
-</button>
-
-<button id="rivalPlus">+ Gol rival</button>
-<button class="grey" id="rivalMinus">− Gol rival</button>
-</div>
-
-<p class="muted">
-Los goles anotados desde las tarjetas de los jugadores
-actualizan automáticamente el marcador.
-</p>
 </section>
+
+</div>
 
 <section class="panel">
 <h2 id="playersTitle">Titulares: 0/8</h2>
-<div id="players" class="players"></div>
+<div class="players" id="players"></div>
 </section>
 
-<section class="panel">
-<h2>📊 Estadísticas en directo</h2>
-
+<details class="panel">
+<summary>📊 Estadísticas y Excel</summary>
 <div class="scroll">
 <table>
 <thead>
 <tr>
 <th>Jugador</th>
-<th id="colHalf1">1.ª</th>
-<th id="colHalf2">2.ª</th>
+<th>1.ª / Única</th>
+<th>2.ª</th>
 <th>Total</th>
 <th>⚽</th>
 <th>👟</th>
@@ -219,20 +200,11 @@ actualizan automáticamente el marcador.
 <tbody id="summary"></tbody>
 </table>
 </div>
-
-<div class="actions">
-<button class="green" id="export">
-Exportar CSV para Excel
-</button>
-<button class="red" id="reset">
-Reiniciar este partido
-</button>
+<div class="buttons">
+<button id="export" class="green">Exportar CSV</button>
+<button id="reset" class="red">Reiniciar partido</button>
 </div>
-
-<p class="muted">
-Todos los tiempos están en MM:SS y se actualizan cada segundo.
-</p>
-</section>
+</details>
 
 </main>
 
@@ -243,1084 +215,594 @@ Todos los tiempos están en MM:SS y se actualizan cada segundo.
 <script>
 "use strict";
 
-/*
-========================================================
-CONFIGURACIÓN DE FIREBASE
-========================================================
-
-Sustituye los valores vacíos por los de tu proyecto.
-
-Firebase Console:
-Configuración del proyecto > Tus aplicaciones > Web
-
-No pongas aquí tu contraseña personal.
-*/
-
+/* FIREBASE: PEGA TU API KEY CORRECTA */
 const firebaseConfig = {
-  apiKey: "AIzaSyAY-ntSe4jskS8wkXdWDYjLSseeFVO2tsM",
-  authDomain: "benxamin-c-santa-marina.firebaseapp.com",
-  projectId: "benxamin-c-santa-marina",
-  storageBucket: "benxamin-c-santa-marina.firebasestorage.app",
-  messagingSenderId: "596374814925",
-  appId: "1:596374814925:web:6c2cbac5f1a360a0f9a984"
+ apiKey: "AIzaSyAY-ntSe4jskS8wkXdWDYjLSseeFVO2tsM",
+ authDomain:"benxamin-c-santa-marina.firebaseapp.com",
+ projectId:"benxamin-c-santa-marina",
+ storageBucket:"benxamin-c-santa-marina.firebasestorage.app",
+ messagingSenderId:"596374814925",
+ appId:"1:596374814925:web:6c2cbac5f1a360a0f9a984"
 };
 
-/*
-========================================================
-JUGADORES
-========================================================
-*/
-
-const PLANTILLA = [
-  [1,"Mauro"],
-  [3,"Javi"],
-  [4,"Elías"],
-  [5,"Brais"],
-  [6,"Xabi"],
-  [7,"Roque"],
-  [8,"Leo Estévez"],
-  [9,"Thiago"],
-  [10,"Enzo"],
-  [11,"Angelo"],
-  [12,"Xes"],
-  [14,"Leo Mendes"]
+const PEOPLE=[
+ [1,"Mauro"],[3,"Javi"],[4,"Elías"],[5,"Brais"],
+ [6,"Xabi"],[7,"Roque"],[8,"Leo Estévez"],
+ [9,"Thiago"],[10,"Enzo"],[11,"Angelo"],
+ [12,"Xes"],[14,"Leo Mendes"]
 ];
 
-/*
-========================================================
-CALENDARIO
-========================================================
-*/
-
-const CALENDARIO = [
-  {
-    id:"j6",
-    nombre:"Jornada 6 · CF San Esteban",
-    fecha:"08/11/2026",
-    rival:"CF San Esteban",
-    tipo:"liga"
-  },
-  {
-    id:"j7",
-    nombre:"Jornada 7 · Moledo C.F. B",
-    fecha:"15/11/2026",
-    rival:"Moledo C.F. B",
-    tipo:"liga"
-  },
-  {
-    id:"j8",
-    nombre:"Jornada 8 · C.D. Nieto A",
-    fecha:"22/11/2026",
-    rival:"C.D. Nieto A",
-    tipo:"liga"
-  },
-  {
-    id:"j9",
-    nombre:"Jornada 9 · Club Peñasco A",
-    fecha:"29/11/2026",
-    rival:"Club Peñasco A",
-    tipo:"liga"
-  }
+const GAMES=[
+ {id:"j6",name:"Jornada 6 · CF San Esteban",
+  date:"08/11/2026",rival:"CF San Esteban",type:"league"},
+ {id:"j7",name:"Jornada 7 · Moledo C.F. B",
+  date:"15/11/2026",rival:"Moledo C.F. B",type:"league"},
+ {id:"j8",name:"Jornada 8 · C.D. Nieto A",
+  date:"22/11/2026",rival:"C.D. Nieto A",type:"league"},
+ {id:"j9",name:"Jornada 9 · Club Peñasco A",
+  date:"29/11/2026",rival:"Club Peñasco A",type:"league"}
 ];
 
-const CLAVE = "santamarina_firebase_v1";
-const MAX_JUGADORES = 8;
-const DURACION_LIGA = 1500;
+const KEY="santamarina_firebase_v1";
+const MAX=8;
+const $=id=>document.getElementById(id);
+const sum=x=>x[0]+x[1];
 
-const $ = id => document.getElementById(id);
+let store={entrenamientos:[],partidos:{}};
+let id="j6",data,history=[];
+let auth=null,db=null,user=null,unsubscribe=null;
+let saveTimer=null,savePromise=Promise.resolve();
+let pending=false,cloudLoading=false;
+let activePage=true,deletedIds=new Set();
 
-let almacen = {
-  entrenamientos:[],
-  partidos:{}
-};
+try{
+ const s=JSON.parse(localStorage.getItem(KEY)||"null");
+ if(s&&s.partidos)store=s;
+}catch(e){console.warn(e)}
 
-let partidoId = "j6";
-let datos = null;
-let historial = [];
-
-let auth = null;
-let db = null;
-let usuario = null;
-let escucha = null;
-let temporizadorGuardado = null;
-let revisionLocal = 0;
-let revisionEnviada = 0;
-let cargandoNube = false;
-
-/*
-========================================================
-ALMACENAMIENTO LOCAL
-========================================================
-*/
-
-try {
-  const guardado = JSON.parse(
-    localStorage.getItem(CLAVE) || "null"
-  );
-
-  if(guardado && guardado.partidos) {
-    almacen = guardado;
-  }
-} catch(e) {
-  console.warn(e);
+function game(gid){
+ return [...GAMES,...store.entrenamientos]
+  .find(g=>g.id===gid);
 }
-
-function guardarLocal() {
-  almacen.partidos[partidoId] = datos;
-
-  try {
-    localStorage.setItem(CLAVE,JSON.stringify(almacen));
-  } catch(e) {
-    console.error(e);
-  }
+function training(){
+ return game(id)?.type==="training" ||
+        game(id)?.tipo==="entreno";
 }
-
-function referenciaPartido(id) {
-  return db.collection("entrenadores")
-    .doc(usuario.uid)
-    .collection("partidos")
-    .doc(id);
+function duration(){
+ return training()
+  ?Math.max(60,Number(game(id).minutes||game(id).minutos||30)*60)
+  :1500;
 }
-
-function guardar() {
-  guardarLocal();
-  revisionLocal++;
-
-  if(!usuario || !db || cargandoNube) return;
-
-  clearTimeout(temporizadorGuardado);
-
-  const idActual = partidoId;
-  const copia = JSON.parse(JSON.stringify(datos));
-  const revision = revisionLocal;
-
-  temporizadorGuardado = setTimeout(async () => {
-    try {
-      await referenciaPartido(idActual).set({
-        data:copia,
-        updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-      });
-
-      revisionEnviada = revision;
-      $("syncStatus").textContent =
-        "☁️ Guardado en Firebase";
-    } catch(e) {
-      $("syncStatus").textContent =
-        "⚠️ Error de sincronización: " + e.message;
-    }
-  },400);
+function fresh(g){
+ return {
+  phase:"pre1",half:0,sec:0,stamp:null,
+  selected:[],rival:g.rival||"",
+  score:{ours:[0,0],theirs:[0,0],unassigned:[0,0]},
+  players:PEOPLE.map(([number,name])=>({
+   number,name,on:false,time:[0,0],
+   goals:[0,0],assists:[0,0]
+  }))
+ };
 }
-
-/*
-========================================================
-PARTIDOS Y ENTRENAMIENTOS
-========================================================
-*/
-
-function partidoActual() {
-  return [
-    ...CALENDARIO,
-    ...almacen.entrenamientos
-  ].find(p => p.id === partidoId);
+function localSave(){
+ store.partidos[id]=data;
+ try{
+  localStorage.setItem(KEY,JSON.stringify(store));
+ }catch(e){console.warn(e)}
 }
-
-function esEntrenamiento() {
-  return partidoActual().tipo === "entreno";
+function cloudRef(gid){
+ return db.collection("entrenadores").doc(user.uid)
+  .collection("partidos").doc(gid);
 }
-
-function duracion() {
-  if(esEntrenamiento()) {
-    return Number(partidoActual().minutos) * 60;
-  }
-
-  return DURACION_LIGA;
+function persist(){
+ localSave();
+ if(!user||!db||cloudLoading)return;
+ pending=true;
+ clearTimeout(saveTimer);
+ const current=id;
+ const copy=JSON.parse(JSON.stringify(data));
+ saveTimer=setTimeout(()=>{
+  const ref=cloudRef(current);
+  savePromise=savePromise.then(()=>{
+   if(deletedIds.has(current))return;
+   return ref.set({
+    data:copy,
+    updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+   });
+  }).then(()=>{
+   pending=false;
+   $("sync").textContent="Sincronizado";
+  }).catch(e=>{
+   pending=false;
+   $("sync").textContent="Error guardando: "+e.message;
+  });
+ },350);
 }
-
-function estadoNuevo(partido) {
-  return {
-    fase:"pre1",
-    parte:0,
-    segundos:0,
-    actualizado:null,
-    seleccion:[],
-    rival:partido.rival || "",
-    marcador:{
-      propios:[0,0],
-      rivales:[0,0],
-      sinAsignar:[0,0]
-    },
-    jugadores:PLANTILLA.map(([dorsal,nombre]) => ({
-      dorsal,
-      nombre,
-      campo:false,
-      tiempos:[0,0],
-      goles:[0,0],
-      asistencias:[0,0]
-    }))
-  };
+function mmss(s){
+ const n=Math.floor(Math.max(0,s));
+ return String(Math.floor(n/60)).padStart(2,"0")
+  +":"+String(n%60).padStart(2,"0");
 }
-
-function opcionesPartidos() {
-  const selector = $("matchSelect");
-  selector.replaceChildren();
-
-  for(const p of CALENDARIO) {
-    selector.add(new Option(p.nombre,p.id));
-  }
-
-  for(const p of almacen.entrenamientos) {
-    selector.add(new Option(
-      "Entreno · " + p.fecha + " · " + p.nombre,
-      p.id
-    ));
-  }
-
-  selector.add(new Option(
-    "＋ Crear partidillo de entrenamiento",
-    "nuevo"
+function setup(){
+ return data.phase==="pre1"||data.phase==="break";
+}
+function finishHalf(){
+ data.stamp=null;
+ data.players.forEach(p=>p.on=false);
+ data.selected=[];
+ data.phase=training()||data.half===1?"done":"break";
+ history=[];
+ persist();
+}
+function advance(){
+ if(!data||data.phase!=="playing")return;
+ const now=Date.now();
+ const diff=Math.max(0,(now-(data.stamp??now))/1000);
+ const step=Math.min(diff,Math.max(0,duration()-data.sec));
+ data.sec+=step;
+ data.stamp=now;
+ data.players.forEach(p=>{
+  if(p.on)p.time[data.half]+=step;
+ });
+ if(data.sec>=duration())finishHalf();
+}
+function options(){
+ const select=$("matches");
+ select.replaceChildren();
+ [...GAMES,...store.entrenamientos].forEach(g=>{
+  select.add(new Option(
+   g.name||g.nombre,g.id
   ));
-
-  selector.value = partidoId;
+ });
+ select.add(new Option(
+  "＋ Crear partidillo de entrenamiento","new"
+ ));
+ select.value=id;
 }
-
-function abrirPartido(id) {
-  if(datos) {
-    avanzar();
-    guardar();
+function subscribe(){
+ if(unsubscribe){unsubscribe();unsubscribe=null}
+ if(!user||!db)return;
+ const current=id;
+ unsubscribe=cloudRef(current).onSnapshot(snap=>{
+  if(id!==current||!snap.exists||pending||cloudLoading)return;
+  const remote=snap.data().data;
+  if(!remote||!Array.isArray(remote.players))return;
+  data=remote;
+  advance();
+  localSave();
+  render();
+ },e=>$("sync").textContent="Error: "+e.message);
+}
+async function choose(gid){
+ if(data){
+  advance();
+  localSave();
+ }
+ if(unsubscribe){unsubscribe();unsubscribe=null}
+ clearTimeout(saveTimer);
+ if(user)await savePromise;
+ id=gid;
+ const g=game(id);
+ if(!g)return;
+ data=store.partidos[id]||fresh(g);
+ history=[];
+ if(user&&db){
+  cloudLoading=true;
+  try{
+   const snap=await cloudRef(id).get();
+   if(snap.exists&&snap.data().data){
+    data=snap.data().data;
+   }else{
+    await cloudRef(id).set({data:data});
+   }
+  }catch(e){
+   $("sync").textContent="Error cargando: "+e.message;
+  }finally{cloudLoading=false}
+ }
+ advance();
+ localSave();
+ options();
+ subscribe();
+ render();
+}
+function person(n){
+ return data.players.find(p=>p.number===n);
+}
+function toggle(n){
+ advance();
+ const p=person(n);
+ if(setup()){
+  const k=data.selected.indexOf(n);
+  if(k>=0)data.selected.splice(k,1);
+  else if(data.selected.length<MAX)data.selected.push(n);
+  else return alert("Selecciona solo 8 titulares.");
+ }else if(data.phase==="playing"){
+  if(!p.on&&data.players.filter(x=>x.on).length>=MAX){
+   return alert("Primero saca a un jugador.");
   }
-
-  if(escucha) {
-    escucha();
-    escucha = null;
-  }
-
-  partidoId = id;
-
-  const partido = partidoActual();
-
-  if(!partido) return;
-
-  datos = almacen.partidos[id] || estadoNuevo(partido);
-  historial = [];
-
-  avanzar();
-  guardarLocal();
-
-  opcionesPartidos();
-  escucharPartido();
-  pintar();
+  history.push(data.players.map(x=>x.on));
+  p.on=!p.on;
+ }else return;
+ persist();render();
 }
-
-/*
-========================================================
-CRONÓMETROS
-========================================================
-*/
-
-function suma(v) {
-  return v[0] + v[1];
+function start(){
+ advance();
+ if(!setup())return;
+ if(data.selected.length!==8){
+  return alert("Selecciona exactamente 8 titulares.");
+ }
+ data.half=data.phase==="break"?1:0;
+ data.sec=0;
+ data.stamp=Date.now();
+ data.phase="playing";
+ data.players.forEach(p=>p.on=data.selected.includes(p.number));
+ data.selected=[];
+ history=[];
+ persist();render();
 }
-
-function formato(segundos) {
-  const n = Math.max(0,Math.floor(segundos));
-
-  return String(Math.floor(n/60)).padStart(2,"0") +
-    ":" + String(n%60).padStart(2,"0");
+function finish(){
+ advance();
+ if(data.phase==="playing")finishHalf();
+ render();
 }
-
-function preparando() {
-  return datos.fase === "pre1" ||
-    datos.fase === "descanso";
+function undo(){
+ advance();
+ if(data.phase!=="playing"||!history.length){
+  return alert("No hay cambios que deshacer.");
+ }
+ const old=history.pop();
+ data.players.forEach((p,i)=>p.on=old[i]);
+ persist();render();
 }
-
-function finalizarTiempo() {
-  if(datos.fase !== "jugando") return;
-
-  datos.actualizado = null;
-
-  for(const j of datos.jugadores) {
-    j.campo = false;
-  }
-
-  datos.seleccion = [];
-
-  if(esEntrenamiento() || datos.parte === 1) {
-    datos.fase = "final";
-  } else {
-    datos.fase = "descanso";
-  }
-
-  historial = [];
-  guardar();
+function stat(n,field,delta){
+ advance();
+ const p=person(n),h=data.half;
+ if(delta<0&&p[field][h]<=0)return;
+ p[field][h]+=delta;
+ if(field==="goals")data.score.ours[h]+=delta;
+ persist();render();
 }
+function unassigned(delta){
+ advance();
+ const h=data.half;
+ if(delta<0&&data.score.unassigned[h]===0)return;
+ data.score.unassigned[h]+=delta;
+ data.score.ours[h]+=delta;
+ persist();render();
+}
+function opponent(delta){
+ advance();
+ const h=data.half;
+ data.score.theirs[h]=Math.max(0,data.score.theirs[h]+delta);
+ persist();render();
+}
+function button(text,cls,fn){
+ const b=document.createElement("button");
+ b.textContent=text;
+ b.className=cls;
+ b.type="button";
+ b.onclick=fn;
+ return b;
+}
+function render(){
+ const g=game(id),playing=data.phase==="playing";
+ $("matches").value=id;
+ $("deleteTraining").hidden=!training();
+ $("matchInfo").textContent=training()
+  ?g.date+" · Tiempo corrido · "+(g.minutes||g.minutos)+" min"
+  :g.date+" · Liga · 25 + 25 min";
+ if(document.activeElement!==$("rival"))
+  $("rival").value=data.rival;
+ $("rivalTitle").textContent=data.rival||"Rival";
+ $("clock").textContent=mmss(
+  training()?data.sec:data.half*1500+data.sec
+ );
+ $("start").hidden=!setup();
+ $("finish").hidden=!playing;
+ $("start").textContent=training()
+  ?"Iniciar partidillo"
+  :data.phase==="break"?"Iniciar segunda parte":"Iniciar primera parte";
+ $("finish").textContent=training()
+  ?"Finalizar partidillo"
+  :data.half===0?"Terminar 1.ª parte":"Finalizar partido";
+ const phase={
+  pre1:training()?"PREPARAR ENTRENAMIENTO":"PREPARAR PRIMERA PARTE",
+  break:"DESCANSO · RELOJ PARADO",
+  done:"PARTIDO FINALIZADO"
+ };
+ $("phase").textContent=data.phase==="playing"
+  ?training()?"ENTRENAMIENTO · TIEMPO CORRIDO":
+   data.half===0?"PRIMERA PARTE":"SEGUNDA PARTE"
+  :phase[data.phase];
+ $("hint").textContent=setup()
+  ?"Selecciona 8 titulares."
+  :playing?"Toca SACAR y después METER.":"Tiempo parado.";
+ $("ours").textContent=sum(data.score.ours);
+ $("theirs").textContent=sum(data.score.theirs);
+ $("partials").textContent=training()
+  ?"Un único tiempo"
+  :"1.ª: "+data.score.ours[0]+"-"+data.score.theirs[0]+
+   " · 2.ª: "+data.score.ours[1]+"-"+data.score.theirs[1];
+ $("playersTitle").textContent=setup()
+  ?"Titulares: "+data.selected.length+"/8"
+  :"En campo: "+data.players.filter(p=>p.on).length+"/8";
 
-function avanzar() {
-  if(!datos || datos.fase !== "jugando") return;
+ const area=$("players");
+ area.replaceChildren();
+ for(const p of data.players){
+  const chosen=data.selected.includes(p.number);
+  const card=document.createElement("div");
+  card.className="player"+
+   (playing&&p.on?" on":"")+
+   (setup()&&chosen?" selected":"");
+  const title=document.createElement("h3");
+  title.textContent=p.number+" · "+p.name;
+  const timer=document.createElement("div");
+  timer.className="timer";
+  timer.textContent=mmss(sum(p.time));
+  const status=document.createElement("div");
+  status.className="status";
+  status.textContent=setup()
+   ?chosen?"✓ TITULAR":"Seleccionar"
+   :playing?p.on?"🟢 EN CAMPO":"⚪ BANQUILLO":"FINALIZADO";
+  const toggleBtn=button(
+   setup()?chosen?"✓ TITULAR":"SELECCIONAR":
+   playing?p.on?"SACAR":"METER":"FINALIZADO",
+   "wide "+(p.on?"green":"grey"),()=>toggle(p.number)
+  );
+  toggleBtn.disabled=data.phase==="done";
 
-  const ahora = Date.now();
-  const anterior = datos.actualizado ?? ahora;
-
-  const transcurrido = Math.max(
-    0,(ahora - anterior)/1000
+  const goals=document.createElement("p");
+  goals.className="stat";
+  goals.textContent="⚽ Goles: "+sum(p.goals);
+  const gb=document.createElement("div");
+  gb.className="twobuttons";
+  gb.append(
+   button("+ Gol","green",()=>stat(p.number,"goals",1)),
+   button("− Gol","red",()=>stat(p.number,"goals",-1))
   );
 
-  const incremento = Math.min(
-    transcurrido,
-    Math.max(0,duracion()-datos.segundos)
+  const assists=document.createElement("p");
+  assists.className="stat";
+  assists.textContent="👟 Asist.: "+sum(p.assists);
+  const ab=document.createElement("div");
+  ab.className="twobuttons";
+  ab.append(
+   button("+ Asist.","",()=>stat(p.number,"assists",1)),
+   button("− Asist.","grey",()=>stat(p.number,"assists",-1))
   );
+  card.append(title,timer,status,toggleBtn,goals,gb,assists,ab);
+  area.append(card);
+ }
 
-  datos.segundos += incremento;
-  datos.actualizado = ahora;
-
-  for(const j of datos.jugadores) {
-    if(j.campo) {
-      j.tiempos[datos.parte] += incremento;
-    }
-  }
-
-  if(datos.segundos >= duracion()) {
-    finalizarTiempo();
-  }
-}
-
-/*
-========================================================
-JUGADORES Y CAMBIOS
-========================================================
-*/
-
-function jugador(dorsal) {
-  return datos.jugadores.find(j => j.dorsal === dorsal);
-}
-
-function tocarJugador(dorsal) {
-  avanzar();
-
-  const j = jugador(dorsal);
-
-  if(preparando()) {
-    const posicion = datos.seleccion.indexOf(dorsal);
-
-    if(posicion >= 0) {
-      datos.seleccion.splice(posicion,1);
-    } else {
-      if(datos.seleccion.length >= MAX_JUGADORES) {
-        alert("Solo puedes seleccionar 8 titulares.");
-        return;
-      }
-
-      datos.seleccion.push(dorsal);
-    }
-
-  } else if(datos.fase === "jugando") {
-    const activos = datos.jugadores.filter(
-      x => x.campo
-    ).length;
-
-    if(!j.campo && activos >= MAX_JUGADORES) {
-      alert("Primero debes sacar a otro jugador.");
-      return;
-    }
-
-    historial.push(
-      datos.jugadores.map(x => x.campo)
-    );
-
-    j.campo = !j.campo;
-
-  } else {
-    return;
-  }
-
-  guardar();
-  pintar();
-}
-
-function iniciar() {
-  avanzar();
-
-  if(!preparando()) return;
-
-  if(datos.seleccion.length !== 8) {
-    alert("Selecciona exactamente 8 titulares.");
-    return;
-  }
-
-  datos.parte = datos.fase === "descanso" ? 1 : 0;
-  datos.segundos = 0;
-  datos.actualizado = Date.now();
-  datos.fase = "jugando";
-
-  for(const j of datos.jugadores) {
-    j.campo = datos.seleccion.includes(j.dorsal);
-  }
-
-  datos.seleccion = [];
-  historial = [];
-
-  guardar();
-  pintar();
-}
-
-function terminar() {
-  avanzar();
-
-  if(datos.fase === "jugando") {
-    finalizarTiempo();
-  }
-
-  pintar();
-}
-
-function deshacer() {
-  avanzar();
-
-  if(datos.fase !== "jugando" || !historial.length) {
-    alert("No hay sustituciones para deshacer.");
-    return;
-  }
-
-  const anterior = historial.pop();
-
-  datos.jugadores.forEach((j,i) => {
-    j.campo = anterior[i];
+ const tbody=$("summary");
+ tbody.replaceChildren();
+ for(const p of data.players){
+  const tr=document.createElement("tr");
+  if(playing&&p.on)tr.style.background="#dcf7e7";
+  [
+   p.number+" · "+p.name,
+   mmss(p.time[0]),
+   training()?"—":mmss(p.time[1]),
+   mmss(sum(p.time)),
+   sum(p.goals),
+   sum(p.assists)
+  ].forEach(v=>{
+   const td=document.createElement("td");
+   td.textContent=v;
+   tr.append(td);
   });
-
-  guardar();
-  pintar();
+  tbody.append(tr);
+ }
+}
+function exportCSV(){
+ advance();
+ localSave();
+ const g=game(id);
+ const rows=[[
+  "Dorsal","Jugador","Primera / Única",
+  "Segunda","Total","Goles","Asistencias"
+ ]];
+ data.players.forEach(p=>rows.push([
+  p.number,p.name,mmss(p.time[0]),
+  training()?"":mmss(p.time[1]),
+  mmss(sum(p.time)),sum(p.goals),sum(p.assists)
+ ]));
+ rows.push(
+  [],
+  ["Partido",g.name||g.nombre],
+  ["Fecha",g.date],
+  ["Rival",data.rival],
+  ["Marcador",sum(data.score.ours)+" - "+sum(data.score.theirs)]
+ );
+ const csv="\uFEFF"+rows.map(r=>
+  r.map(v=>'"'+String(v??"").replaceAll('"','""')+'"').join(";")
+ ).join("\r\n");
+ const url=URL.createObjectURL(new Blob([csv],{
+  type:"text/csv;charset=utf-8"
+ }));
+ const a=document.createElement("a");
+ a.href=url;
+ a.download="SantaMarina_"+id+".csv";
+ document.body.append(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),3000);
 }
 
-/*
-========================================================
-GOLES Y ASISTENCIAS
-========================================================
-*/
+async function deleteTraining(){
+ const g=game(id);
+ if(!training())return;
+ if(!confirm(
+  "¿Eliminar definitivamente este entrenamiento y sus estadísticas?"
+ ))return;
 
-function estadistica(dorsal,tipo,cantidad) {
-  avanzar();
+ const oldId=id;
+ clearTimeout(saveTimer);
+ deletedIds.add(oldId);
+ if(unsubscribe){unsubscribe();unsubscribe=null}
+ await savePromise;
 
-  const j = jugador(dorsal);
-  const parte = datos.parte;
+ const remaining=store.entrenamientos.filter(x=>x.id!==oldId);
 
-  if(cantidad < 0 && j[tipo][parte] <= 0) return;
-
-  j[tipo][parte] += cantidad;
-
-  if(tipo === "goles") {
-    datos.marcador.propios[parte] += cantidad;
+ if(user&&db){
+  try{
+   const base=db.collection("entrenadores").doc(user.uid);
+   await base.collection("partidos").doc(oldId).delete();
+   await base.collection("config").doc("entrenamientos")
+    .set({lista:remaining});
+  }catch(e){
+   deletedIds.delete(oldId);
+   subscribe();
+   alert("Error eliminando en Firebase: "+e.message);
+   return;
   }
-
-  guardar();
-  pintar();
+ }
+ delete store.partidos[oldId];
+ store.entrenamientos=remaining;
+ data=null;
+ try{
+  localStorage.setItem(KEY,JSON.stringify(store));
+ }catch(e){}
+ await choose("j6");
+ $("trainingCreate").hidden=true;
+ alert("Entrenamiento eliminado.");
 }
 
-function golSinAsignar(cantidad) {
-  avanzar();
+$("deleteTraining").onclick=deleteTraining;
 
-  const p = datos.parte;
+$("matches").onchange=e=>{
+ if(e.target.value==="new"){
+  $("trainingCreate").hidden=false;
+  return;
+ }
+ $("trainingCreate").hidden=true;
+ choose(e.target.value);
+};
 
-  if(cantidad < 0 &&
-     datos.marcador.sinAsignar[p] <= 0) {
-    return;
+$("addTraining").onclick=async()=>{
+ const date=$("trainDate").value;
+ const name=$("trainName").value.trim();
+ const minutes=Number($("trainMinutes").value);
+ if(!date||!name||minutes<1||minutes>180){
+  return alert("Indica fecha, nombre y duración válida.");
+ }
+ const g={
+  id:"entreno-"+Date.now(),
+  name:"Entreno · "+name,
+  date,
+  rival:$("trainRival").value.trim()||name,
+  type:"training",
+  minutes
+ };
+ store.entrenamientos.push(g);
+ localSave();
+ if(user&&db){
+  try{
+   await db.collection("entrenadores").doc(user.uid)
+    .collection("config").doc("entrenamientos")
+    .set({lista:store.entrenamientos});
+  }catch(e){
+   alert("Creado localmente, pero falló la sincronización.");
   }
-
-  datos.marcador.sinAsignar[p] += cantidad;
-  datos.marcador.propios[p] += cantidad;
-
-  guardar();
-  pintar();
-}
-
-function golRival(cantidad) {
-  avanzar();
-
-  const p = datos.parte;
-
-  datos.marcador.rivales[p] = Math.max(
-    0,
-    datos.marcador.rivales[p] + cantidad
-  );
-
-  guardar();
-  pintar();
-}
-
-/*
-========================================================
-INTERFAZ
-========================================================
-*/
-
-function boton(texto,clase,funcion) {
-  const b = document.createElement("button");
-  b.type = "button";
-  b.textContent = texto;
-  b.className = clase;
-  b.onclick = funcion;
-  return b;
-}
-
-function pintar() {
-  const activo = datos.fase === "jugando";
-  const preparacion = preparando();
-  const entreno = esEntrenamiento();
-  const p = partidoActual();
-
-  $("matchSelect").value = partidoId;
-
-  $("matchInfo").textContent = entreno
-    ? p.fecha + " · Tiempo corrido: " +
-      p.minutos + " minutos"
-    : p.fecha + " · Liga · 25 + 25 minutos";
-
-  if(document.activeElement !== $("rival")) {
-    $("rival").value = datos.rival;
-  }
-
-  $("opponent").textContent = datos.rival || "Rival";
-
-  const tiempoVisible = entreno
-    ? datos.segundos
-    : datos.parte * DURACION_LIGA + datos.segundos;
-
-  $("clock").textContent = formato(tiempoVisible);
-
-  $("start").hidden = !preparacion;
-  $("finish").hidden = !activo;
-
-  if(datos.fase === "pre1") {
-    $("phase").textContent = entreno
-      ? "PREPARAR ENTRENAMIENTO"
-      : "PREPARAR PRIMERA PARTE";
-
-  } else if(datos.fase === "jugando") {
-    $("phase").textContent = entreno
-      ? "ENTRENAMIENTO · TIEMPO CORRIDO"
-      : datos.parte === 0
-        ? "PRIMERA PARTE EN JUEGO"
-        : "SEGUNDA PARTE EN JUEGO";
-
-  } else if(datos.fase === "descanso") {
-    $("phase").textContent = "DESCANSO · RELOJ PARADO";
-
-  } else {
-    $("phase").textContent = "FINALIZADO";
-  }
-
-  $("start").textContent = entreno
-    ? "Iniciar partidillo"
-    : datos.fase === "descanso"
-      ? "Iniciar segunda parte"
-      : "Iniciar primera parte";
-
-  $("finish").textContent = entreno
-    ? "Finalizar partidillo"
-    : datos.parte === 0
-      ? "Terminar primera parte"
-      : "Finalizar partido";
-
-  $("hint").textContent = preparacion
-    ? "Selecciona exactamente 8 titulares."
-    : activo
-      ? "Saca primero a un jugador y después mete a otro."
-      : "Puedes exportar las estadísticas.";
-
-  $("ours").textContent = suma(datos.marcador.propios);
-  $("theirs").textContent = suma(datos.marcador.rivales);
-
-  $("halves").hidden = entreno;
-
-  $("score1").textContent =
-    datos.marcador.propios[0] + " - " +
-    datos.marcador.rivales[0];
-
-  $("score2").textContent =
-    datos.marcador.propios[1] + " - " +
-    datos.marcador.rivales[1];
-
-  $("colHalf1").textContent = entreno
-    ? "Único"
-    : "1.ª";
-
-  $("colHalf2").textContent = entreno
-    ? "—"
-    : "2.ª";
-
-  $("playersTitle").textContent = preparacion
-    ? "Titulares: " + datos.seleccion.length + "/8"
-    : "En campo: " +
-      datos.jugadores.filter(j => j.campo).length + "/8";
-
-  const contenedor = $("players");
-  contenedor.replaceChildren();
-
-  for(const j of datos.jugadores) {
-    const elegido = datos.seleccion.includes(j.dorsal);
-
-    const tarjeta = document.createElement("div");
-
-    tarjeta.className = "player" +
-      (activo && j.campo ? " playing" : "") +
-      (preparacion && elegido ? " selected" : "");
-
-    const nombre = document.createElement("h3");
-    nombre.textContent = j.dorsal + " · " + j.nombre;
-
-    const crono = document.createElement("div");
-    crono.className = "timer";
-    crono.textContent = "⏱ " + formato(suma(j.tiempos));
-
-    const situacion = document.createElement("div");
-    situacion.className = "status";
-
-    situacion.textContent = preparacion
-      ? elegido
-        ? "✓ TITULAR"
-        : "Seleccionar titular"
-      : activo
-        ? j.campo
-          ? "🟢 EN CAMPO · EN DIRECTO"
-          : "⚪ BANQUILLO · PARADO"
-        : "FINALIZADO";
-
-    const accion = boton(
-      preparacion
-        ? elegido ? "✓ TITULAR" : "SELECCIONAR"
-        : activo
-          ? j.campo ? "SACAR" : "METER"
-          : "FINALIZADO",
-      "toggle " + (j.campo ? "green" : "grey"),
-      () => tocarJugador(j.dorsal)
-    );
-
-    accion.disabled = datos.fase === "final";
-
-    const goles = document.createElement("div");
-    goles.className = "stat";
-    goles.textContent = "⚽ Goles: " + suma(j.goles);
-
-    const botonesGoles = document.createElement("div");
-    botonesGoles.className = "duo";
-
-    botonesGoles.append(
-      boton("+ Gol","green",
-        () => estadistica(j.dorsal,"goles",1)),
-      boton("− Gol","red",
-        () => estadistica(j.dorsal,"goles",-1))
-    );
-
-    const asistencias = document.createElement("div");
-    asistencias.className = "stat";
-    asistencias.textContent =
-      "👟 Asistencias: " + suma(j.asistencias);
-
-    const botonesAsistencias = document.createElement("div");
-    botonesAsistencias.className = "duo";
-
-    botonesAsistencias.append(
-      boton("+ Asist.","",
-        () => estadistica(j.dorsal,"asistencias",1)),
-      boton("− Asist.","grey",
-        () => estadistica(j.dorsal,"asistencias",-1))
-    );
-
-    tarjeta.append(
-      nombre,
-      crono,
-      situacion,
-      accion,
-      goles,
-      botonesGoles,
-      asistencias,
-      botonesAsistencias
-    );
-
-    contenedor.append(tarjeta);
-  }
-
-  const resumen = $("summary");
-  resumen.replaceChildren();
-
-  for(const j of datos.jugadores) {
-    const fila = document.createElement("tr");
-
-    if(activo && j.campo) {
-      fila.className = "playing-row";
-    }
-
-    const valores = [
-      j.dorsal + " · " + j.nombre,
-      formato(j.tiempos[0]),
-      entreno ? "—" : formato(j.tiempos[1]),
-      formato(suma(j.tiempos)),
-      suma(j.goles),
-      suma(j.asistencias)
-    ];
-
-    valores.forEach(v => {
-      const celda = document.createElement("td");
-      celda.textContent = v;
-      fila.append(celda);
-    });
-
-    resumen.append(fila);
-  }
-}
-
-/*
-========================================================
-EXPORTAR EXCEL CSV
-========================================================
-*/
-
-function exportar() {
-  avanzar();
-  guardarLocal();
-
-  const p = partidoActual();
-
-  const filas = [[
-    "Dorsal",
-    "Jugador",
-    "Primera parte / Tiempo único",
-    "Segunda parte",
-    "Total",
-    "Goles",
-    "Asistencias"
-  ]];
-
-  for(const j of datos.jugadores) {
-    filas.push([
-      j.dorsal,
-      j.nombre,
-      formato(j.tiempos[0]),
-      esEntrenamiento() ? "" : formato(j.tiempos[1]),
-      formato(suma(j.tiempos)),
-      suma(j.goles),
-      suma(j.asistencias)
-    ]);
-  }
-
-  filas.push(
-    [],
-    ["Partido",p.nombre],
-    ["Fecha",p.fecha],
-    ["Rival",datos.rival],
-    ["Marcador",
-      suma(datos.marcador.propios) + " - " +
-      suma(datos.marcador.rivales)]
-  );
-
-  const csv = "\uFEFF" + filas.map(fila =>
-    fila.map(valor =>
-      '"' + String(valor ?? "")
-        .replaceAll('"','""') + '"'
-    ).join(";")
-  ).join("\r\n");
-
-  const archivo = new Blob([csv],{
-    type:"text/csv;charset=utf-8"
-  });
-
-  const url = URL.createObjectURL(archivo);
-  const enlace = document.createElement("a");
-
-  enlace.href = url;
-  enlace.download = "SantaMarina_" + partidoId + ".csv";
-
-  document.body.append(enlace);
-  enlace.click();
-  enlace.remove();
-
-  setTimeout(() => URL.revokeObjectURL(url),3000);
-}
-
-/*
-========================================================
-CREAR ENTRENAMIENTO
-========================================================
-*/
-
-async function crearEntrenamiento() {
-  const fecha = $("trainingDate").value;
-  const nombre = $("trainingName").value.trim();
-  const minutos = Number($("trainingMinutes").value);
-  const rival = $("trainingRival").value.trim();
-
-  if(!fecha || !nombre || minutos < 1 || minutos > 180) {
-    alert("Introduce fecha, nombre y duración válida.");
-    return;
-  }
-
-  const nuevo = {
-    id:"entreno-" + Date.now(),
-    nombre,
-    fecha,
-    rival:rival || nombre,
-    minutos,
-    tipo:"entreno"
-  };
-
-  almacen.entrenamientos.push(nuevo);
-
-  try {
-    localStorage.setItem(CLAVE,JSON.stringify(almacen));
-  } catch(e) {
-    console.warn(e);
-  }
-
-  if(usuario && db) {
-    try {
-      await db.collection("entrenadores")
-        .doc(usuario.uid)
-        .collection("config")
-        .doc("entrenamientos")
-        .set({
-          lista:almacen.entrenamientos
-        });
-    } catch(e) {
-      alert("El entrenamiento se creó localmente, pero no pudo sincronizarse.");
-    }
-  }
-
-  $("trainingFields").hidden = true;
-  abrirPartido(nuevo.id);
-}
-
-/*
-========================================================
-FIREBASE AUTHENTICATION Y FIRESTORE
-========================================================
-*/
-
-const configurado = Boolean(
-  firebaseConfig.apiKey &&
-  firebaseConfig.authDomain &&
-  firebaseConfig.projectId &&
-  firebaseConfig.appId
+ }
+ $("trainingCreate").hidden=true;
+ await choose(g.id);
+};
+
+$("rival").onchange=e=>{
+ data.rival=e.target.value.trim();
+ persist();render();
+};
+$("start").onclick=start;
+$("finish").onclick=finish;
+$("undo").onclick=undo;
+$("ownPlus").onclick=()=>unassigned(1);
+$("ownMinus").onclick=()=>unassigned(-1);
+$("oppPlus").onclick=()=>opponent(1);
+$("oppMinus").onclick=()=>opponent(-1);
+$("export").onclick=exportCSV;
+$("reset").onclick=()=>{
+ if(!confirm("¿Borrar las estadísticas de este partido?"))return;
+ data=fresh(game(id));history=[];
+ persist();render();
+};
+
+/* FIREBASE */
+const configured=!!(
+ firebaseConfig.apiKey &&
+ !firebaseConfig.apiKey.startsWith("PEGA_") &&
+ firebaseConfig.authDomain &&
+ firebaseConfig.projectId
 );
 
-function escucharPartido() {
-  if(escucha) {
-    escucha();
-    escucha = null;
-  }
+if(configured&&typeof firebase!=="undefined"){
+ try{
+  firebase.initializeApp(firebaseConfig);
+  auth=firebase.auth();
+  db=firebase.firestore();
+  $("sync").textContent="Firebase preparado";
 
-  if(!usuario || !db) return;
+  $("signIn").onclick=()=>auth.signInWithEmailAndPassword(
+   $("email").value,$("password").value
+  ).catch(e=>alert(e.message));
 
-  const idEscuchado = partidoId;
+  $("signUp").onclick=()=>auth.createUserWithEmailAndPassword(
+   $("email").value,$("password").value
+  ).catch(e=>alert(e.message));
 
-  escucha = referenciaPartido(idEscuchado)
-    .onSnapshot(snapshot => {
-      if(partidoId !== idEscuchado || !snapshot.exists) {
-        return;
-      }
+  $("signOut").onclick=()=>auth.signOut();
 
-      const remoto = snapshot.data().data;
+  auth.onAuthStateChanged(async u=>{
+   user=u;
+   $("signOut").hidden=!u;
+   $("signIn").hidden=!!u;
+   $("signUp").hidden=!!u;
 
-      if(!remoto || !Array.isArray(remoto.jugadores)) {
-        return;
-      }
-
-      if(temporizadorGuardado) {
-        // Evita sustituir cambios locales pendientes.
-        return;
-      }
-
-      datos = remoto;
-      avanzar();
-      guardarLocal();
-      pintar();
-
-    },error => {
-      $("syncStatus").textContent =
-        "Error Firebase: " + error.message;
-    });
-}
-
-async function cargarNube() {
-  if(!usuario || !db) return;
-
-  cargandoNube = true;
-
-  try {
-    const base = db.collection("entrenadores")
-      .doc(usuario.uid);
-
-    const configuracion = await base.collection("config")
-      .doc("entrenamientos")
-      .get();
-
-    if(configuracion.exists) {
-      const lista = configuracion.data().lista;
-
-      if(Array.isArray(lista)) {
-        almacen.entrenamientos = lista;
-      }
-    }
-
-    opcionesPartidos();
-
-    const documento = await base.collection("partidos")
-      .doc(partidoId)
-      .get();
-
-    if(documento.exists && documento.data().data) {
-      datos = documento.data().data;
-      guardarLocal();
-    } else {
-      await base.collection("partidos")
-        .doc(partidoId)
-        .set({data:datos});
-    }
-
-    $("syncStatus").textContent =
-      "☁️ Firebase conectado: " + usuario.email;
-
-  } catch(e) {
-    $("syncStatus").textContent =
-      "⚠️ Error Firebase: " + e.message;
-  } finally {
-    cargandoNube = false;
-    escucharPartido();
-    pintar();
-  }
-}
-
-if(configurado && typeof firebase !== "undefined") {
-  try {
-    firebase.initializeApp(firebaseConfig);
-
-    auth = firebase.auth();
-    db = firebase.firestore();
-
-    $("syncStatus").textContent =
-      "Firebase preparado · Inicia sesión";
-
-    $("loginBtn").onclick = async () => {
-      try {
-        await auth.signInWithEmailAndPassword(
-          $("email").value,
-          $("password").value
-        );
-      } catch(e) {
-        alert("Error al entrar: " + e.message);
-      }
-    };
-
-    $("registerBtn").onclick = async () => {
-      try {
-        await auth.createUserWithEmailAndPassword(
-          $("email").value,
-          $("password").value
-        );
-      } catch(e) {
-        alert("Error al crear cuenta: " + e.message);
-      }
-    };
-
-    $("logoutBtn").onclick = () => auth.signOut();
-
-    auth.onAuthStateChanged(async user => {
-      usuario = user;
-
-      $("loginBtn").hidden = Boolean(user);
-      $("registerBtn").hidden = Boolean(user);
-      $("logoutBtn").hidden = !user;
-
-      if(user) {
-        await cargarNube();
-      } else {
-        if(escucha) {
-          escucha();
-          escucha = null;
-        }
-
-        $("syncStatus").textContent =
-          "Modo local · Sesión cerrada";
-      }
-    });
-
-  } catch(e) {
-    $("syncStatus").textContent =
-      "Error al iniciar Firebase: " + e.message;
-  }
-} else {
-  $("syncStatus").textContent =
-    "Modo local · Firebase sin configurar";
-}
-
-/*
-========================================================
-EVENTOS
-========================================================
-*/
-
-$("matchSelect").onchange = e => {
-  if(e.target.value === "nuevo") {
-    $("trainingFields").hidden = false;
+   if(!u){
+    $("sync").textContent="Modo local";
+    if(unsubscribe){unsubscribe();unsubscribe=null}
     return;
-  }
+   }
 
-  $("trainingFields").hidden = true;
-  abrirPartido(e.target.value);
-};
+   $("sync").textContent="Firebase conectado";
+   cloudLoading=true;
+   try{
+    const cfg=await db.collection("entrenadores").doc(u.uid)
+     .collection("config").doc("entrenamientos").get();
+    if(cfg.exists&&Array.isArray(cfg.data().lista)){
+     store.entrenamientos=cfg.data().lista;
+     options();
+    }
+   }catch(e){
+    $("sync").textContent="Error: "+e.message;
+   }finally{
+    cloudLoading=false;
+   }
+   await choose(id);
+  });
+ }catch(e){
+  $("sync").textContent="Error Firebase: "+e.message;
+ }
+}else{
+ $("sync").textContent="Modo local · Configura Firebase";
+}
 
-$("createTraining").onclick = crearEntrenamiento;
+options();
+choose("j6");
 
-$("rival").onchange = e => {
-  datos.rival = e.target.value.trim();
-  guardar();
-  pintar();
-};
-
-$("start").onclick = iniciar;
-$("finish").onclick = terminar;
-$("undo").onclick = deshacer;
-
-$("ownPlus").onclick = () => golSinAsignar(1);
-$("ownMinus").onclick = () => golSinAsignar(-1);
-
-$("rivalPlus").onclick = () => golRival(1);
-$("rivalMinus").onclick = () => golRival(-1);
-
-$("export").onclick = exportar;
-
-$("reset").onclick = () => {
-  if(!confirm(
-    "¿Borrar las estadísticas de este partido? Exporta antes."
-  )) return;
-
-  datos = estadoNuevo(partidoActual());
-  historial = [];
-
-  guardar();
-  pintar();
-};
-
-/*
-========================================================
-INICIALIZACIÓN
-========================================================
-*/
-
-opcionesPartidos();
-abrirPartido("j6");
-
-setInterval(() => {
-  if(datos && datos.fase === "jugando") {
-    avanzar();
-    guardarLocal();
-    pintar();
-  }
+setInterval(()=>{
+ if(data&&data.phase==="playing"){
+  advance();
+  localSave();
+  render();
+ }
 },1000);
 
-document.addEventListener("visibilitychange",() => {
-  if(!document.hidden && datos) {
-    avanzar();
-    guardarLocal();
-    pintar();
-  }
+document.addEventListener("visibilitychange",()=>{
+ if(!document.hidden&&data){
+  advance();
+  localSave();
+  render();
+ }
 });
 </script>
 </body>
