@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#10243a">
-<title>Minutos Benjamines</title>
+<title>Benxamín C - U.D. Santa Mariña</title>
 <style>
 * { box-sizing: border-box; }
 
@@ -16,19 +16,42 @@ body {
 }
 
 header {
-  background: #10243a;
+  background: linear-gradient(135deg, #10243a, #173b61);
   color: white;
-  padding: 18px;
+  padding: 16px 12px 18px;
   text-align: center;
 }
 
-h1 {
-  font-size: 23px;
+.cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.escudo {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  background: white;
+  border-radius: 12px;
+  padding: 6px;
+}
+
+.titulos h1 {
+  font-size: 24px;
   margin: 0;
 }
 
+.titulos p {
+  margin: 4px 0 0;
+  opacity: .95;
+  font-size: 14px;
+}
+
 main {
-  max-width: 950px;
+  max-width: 1100px;
   margin: auto;
   padding: 12px;
 }
@@ -77,18 +100,108 @@ button {
 }
 
 button:disabled {
-  opacity: .4;
+  opacity: .45;
   cursor: default;
 }
 
 button.verde { background: #168050; }
 button.rojo  { background: #bd3542; }
 button.gris  { background: #607184; }
+button.naranja { background: #b16b08; }
+button.azul { background: #1766d1; }
+
+.marcador-wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media(min-width: 850px) {
+  .marcador-wrap {
+    grid-template-columns: 1.3fr 1fr;
+  }
+}
+
+.marcador {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  align-items: center;
+  text-align: center;
+}
+
+.equipo-box {
+  background: #f4f7fb;
+  border-radius: 12px;
+  padding: 14px 10px;
+}
+
+.equipo-nombre {
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.equipo-goles {
+  font-size: 46px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.vs {
+  font-size: 18px;
+  font-weight: bold;
+  color: #526275;
+}
+
+.panel-mini {
+  background: #f7f9fc;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.parte-boxes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.parte {
+  background: white;
+  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.parte h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.parte p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+.rival-nombre-input {
+  width: 100%;
+  border: 1px solid #ccd7e2;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
 
 .jugadores {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
+}
+
+@media(min-width: 700px) {
+  .jugadores {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .jugador {
@@ -178,18 +291,18 @@ th:not(:first-child) {
 .tabla-scroll {
   overflow-x: auto;
 }
-
-@media(min-width: 700px) {
-  .jugadores {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>⚽ Minutos Benjamines</h1>
+  <div class="cabecera">
+    <img src="escudo-ud-santa-marina.png" alt="Escudo U.D. Santa Mariña" class="escudo">
+    <div class="titulos">
+      <h1>Benxamín C - U.D. Santa Mariña</h1>
+      <p>Control de minutos, cambios, goles y asistencias</p>
+    </div>
+  </div>
 </header>
 
 <main>
@@ -202,15 +315,65 @@ th:not(:first-child) {
       <button id="iniciar" onclick="iniciarParte()">
         Iniciar primera parte
       </button>
-
       <button id="terminar" class="rojo"
         onclick="terminarParte()" style="display:none">
         Terminar primera parte
       </button>
-
       <button class="gris" onclick="deshacerCambio()">
         Deshacer último cambio
       </button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="marcador-wrap">
+      <div>
+        <div class="marcador">
+          <div class="equipo-box">
+            <div class="equipo-nombre">Benxamín C - U.D. Santa Mariña</div>
+            <div id="golesEquipo" class="equipo-goles">0</div>
+          </div>
+
+          <div class="vs">VS</div>
+
+          <div class="equipo-box">
+            <div class="equipo-nombre" id="nombreRivalVista">Rival</div>
+            <div id="golesRival" class="equipo-goles">0</div>
+          </div>
+        </div>
+
+        <br>
+
+        <input
+          id="nombreRival"
+          class="rival-nombre-input"
+          type="text"
+          placeholder="Escribe el nombre del rival"
+          oninput="actualizarNombreRival()"
+        >
+
+        <div class="botones">
+          <button class="verde" onclick="sumarGolEquipo()">+ Gol Santa Mariña</button>
+          <button class="rojo" onclick="restarGolEquipo()">- Gol Santa Mariña</button>
+          <button class="verde" onclick="sumarGolRival()">+ Gol Rival</button>
+          <button class="rojo" onclick="restarGolRival()">- Gol Rival</button>
+        </div>
+      </div>
+
+      <div class="panel-mini">
+        <div class="parte-boxes">
+          <div class="parte">
+            <h3>1.ª parte</h3>
+            <p>Santa Mariña: <strong id="golesEqP1">0</strong></p>
+            <p>Rival: <strong id="golesRvP1">0</strong></p>
+          </div>
+          <div class="parte">
+            <h3>2.ª parte</h3>
+            <p>Santa Mariña: <strong id="golesEqP2">0</strong></p>
+            <p>Rival: <strong id="golesRvP2">0</strong></p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -273,7 +436,7 @@ const PLANTILLA = [
   [14, "Leo Mendes"]
 ];
 
-const CLAVE = "minutos_benjamines_goles_v2";
+const CLAVE = "minutos_benjamines_santa_marina_v1";
 const DURACION = 25 * 60;
 const MAX_JUGADORES = 8;
 
@@ -284,6 +447,15 @@ function estadoInicial() {
     segundos: 0,
     ultimaActualizacion: null,
     seleccion: [],
+    rival: "",
+    marcador: {
+      equipo: 0,
+      rival: 0,
+      partes: {
+        1: { equipo: 0, rival: 0 },
+        2: { equipo: 0, rival: 0 }
+      }
+    },
     jugadores: PLANTILLA.map(([dorsal, nombre]) => ({
       dorsal,
       nombre,
@@ -373,13 +545,11 @@ function tiempoTotalJugador(jugador) {
 
 function tocarJugador(dorsal) {
   avanzarTiempo();
-
   const j = jugadorPorDorsal(dorsal);
   if (!j) return;
 
   if (esPreparacion()) {
     const indice = datos.seleccion.indexOf(dorsal);
-
     if (indice >= 0) {
       datos.seleccion.splice(indice, 1);
     } else {
@@ -391,12 +561,10 @@ function tocarJugador(dorsal) {
     }
   } else if (datos.fase === "jugando") {
     const enCampo = datos.jugadores.filter(x => x.campo).length;
-
     if (!j.campo && enCampo >= MAX_JUGADORES) {
       alert("Primero saca a un jugador del campo.");
       return;
     }
-
     registrarCambio();
     j.campo = !j.campo;
   } else {
@@ -411,7 +579,6 @@ function iniciarParte() {
   avanzarTiempo();
 
   if (!esPreparacion()) return;
-
   if (datos.seleccion.length !== MAX_JUGADORES) {
     alert("Debes seleccionar exactamente 8 titulares.");
     return;
@@ -449,13 +616,10 @@ function finalizarParte() {
 
 function terminarParte() {
   if (datos.fase !== "jugando") return;
-
   avanzarTiempo();
-
   if (datos.fase === "jugando") {
     finalizarParte();
   }
-
   pintar();
 }
 
@@ -468,7 +632,6 @@ function deshacerCambio() {
   }
 
   const anterior = historial.pop();
-
   datos.jugadores.forEach((j, i) => {
     j.campo = anterior[i];
   });
@@ -479,14 +642,52 @@ function deshacerCambio() {
 
 function estadistica(dorsal, tipo, cantidad) {
   avanzarTiempo();
-
   const j = jugadorPorDorsal(dorsal);
   if (!j) return;
-
   if (tipo !== "goles" && tipo !== "asistencias") return;
 
   j[tipo] = Math.max(0, j[tipo] + cantidad);
+  guardar();
+  pintar();
+}
 
+function actualizarNombreRival() {
+  const input = document.getElementById("nombreRival");
+  datos.rival = input.value.trim();
+  guardar();
+  pintar();
+}
+
+function sumarGolEquipo() {
+  datos.marcador.equipo += 1;
+  datos.marcador.partes[datos.parte].equipo += 1;
+  guardar();
+  pintar();
+}
+
+function restarGolEquipo() {
+  if (datos.marcador.equipo <= 0) return;
+  if (datos.marcador.partes[datos.parte].equipo > 0) {
+    datos.marcador.partes[datos.parte].equipo -= 1;
+  }
+  datos.marcador.equipo -= 1;
+  guardar();
+  pintar();
+}
+
+function sumarGolRival() {
+  datos.marcador.rival += 1;
+  datos.marcador.partes[datos.parte].rival += 1;
+  guardar();
+  pintar();
+}
+
+function restarGolRival() {
+  if (datos.marcador.rival <= 0) return;
+  if (datos.marcador.partes[datos.parte].rival > 0) {
+    datos.marcador.partes[datos.parte].rival -= 1;
+  }
+  datos.marcador.rival -= 1;
   guardar();
   pintar();
 }
@@ -528,12 +729,14 @@ function exportarCSV() {
     ]);
   }
 
+  filas.push([]);
+  filas.push(["Rival", datos.rival || "Rival"]);
+  filas.push(["Marcador final", datos.marcador.equipo + " - " + datos.marcador.rival]);
+  filas.push(["1.ª parte", datos.marcador.partes[1].equipo + " - " + datos.marcador.partes[1].rival]);
+  filas.push(["2.ª parte", datos.marcador.partes[2].equipo + " - " + datos.marcador.partes[2].rival]);
+
   const contenido = "\uFEFF" + filas.map(f => f.join(";")).join("\r\n");
-
-  const blob = new Blob([contenido], {
-    type: "text/csv;charset=utf-8"
-  });
-
+  const blob = new Blob([contenido], { type: "text/csv;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
@@ -541,7 +744,6 @@ function exportarCSV() {
   document.body.appendChild(a);
   a.click();
   a.remove();
-
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
@@ -580,7 +782,6 @@ function pintar() {
     estado.textContent = datos.parte === 1
       ? "PRIMERA PARTE EN JUEGO"
       : "SEGUNDA PARTE EN JUEGO";
-
     terminar.textContent = datos.parte === 1
       ? "Terminar primera parte"
       : "Finalizar partido";
@@ -594,8 +795,19 @@ function pintar() {
   ayuda.textContent = preparando
     ? "Selecciona exactamente 8 titulares."
     : jugando
-      ? "Toca para entrar o salir. Goles y asistencias se anotan debajo."
+      ? "Toca para entrar o salir. Los goles y asistencias se anotan abajo."
       : "Partido terminado. Exporta las estadísticas.";
+
+  document.getElementById("golesEquipo").textContent = datos.marcador.equipo;
+  document.getElementById("golesRival").textContent = datos.marcador.rival;
+  document.getElementById("golesEqP1").textContent = datos.marcador.partes[1].equipo;
+  document.getElementById("golesRvP1").textContent = datos.marcador.partes[1].rival;
+  document.getElementById("golesEqP2").textContent = datos.marcador.partes[2].equipo;
+  document.getElementById("golesRvP2").textContent = datos.marcador.partes[2].rival;
+
+  const rivalTexto = datos.rival || "Rival";
+  document.getElementById("nombreRivalVista").textContent = rivalTexto;
+  document.getElementById("nombreRival").value = datos.rival || "";
 
   const activos = datos.jugadores.filter(j => j.campo).length;
 
@@ -689,7 +901,6 @@ function pintar() {
 
   for (const j of datos.jugadores) {
     const tr = document.createElement("tr");
-
     const valores = [
       j.dorsal + " · " + j.nombre,
       minutosFormato(j.tiempos[0]),
