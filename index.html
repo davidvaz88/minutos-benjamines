@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,20 +7,32 @@
 <title>Minutos Benjamines</title>
 <style>
 * { box-sizing: border-box; }
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   color: #182638;
   background: #edf2f7;
 }
+
 header {
   background: #10243a;
   color: white;
   padding: 18px;
   text-align: center;
 }
-h1 { font-size: 23px; margin: 0; }
-main { max-width: 900px; margin: auto; padding: 12px; }
+
+h1 {
+  font-size: 23px;
+  margin: 0;
+}
+
+main {
+  max-width: 950px;
+  margin: auto;
+  padding: 12px;
+}
+
 .panel {
   background: white;
   border-radius: 13px;
@@ -29,15 +40,30 @@ main { max-width: 900px; margin: auto; padding: 12px; }
   margin-bottom: 14px;
   box-shadow: 0 2px 8px #00000010;
 }
+
 .reloj {
   font-size: 52px;
   font-weight: 800;
   text-align: center;
   font-variant-numeric: tabular-nums;
 }
-.estado { text-align: center; font-weight: bold; }
-.ayuda { color: #536579; font-size: 14px; }
-.botones { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.estado {
+  text-align: center;
+  font-weight: bold;
+}
+
+.ayuda {
+  color: #536579;
+  font-size: 14px;
+}
+
+.botones {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 button {
   border: 0;
   border-radius: 9px;
@@ -49,16 +75,22 @@ button {
   background: #1766d1;
   touch-action: manipulation;
 }
-button:disabled { opacity: .4; cursor: default; }
+
+button:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
 button.verde { background: #168050; }
-button.rojo { background: #bd3542; }
-button.gris { background: #607184; }
-button.naranja { background: #b16b08; }
+button.rojo  { background: #bd3542; }
+button.gris  { background: #607184; }
+
 .jugadores {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
+
 .jugador {
   background: #e9eef5;
   border-radius: 12px;
@@ -66,38 +98,91 @@ button.naranja { background: #b16b08; }
   border: 2px solid transparent;
   min-width: 0;
 }
+
 .jugador.campo {
   background: #dcf8e6;
   border-color: #168050;
 }
+
 .jugador.elegido {
   background: #dceaff;
   border-color: #1766d1;
 }
-.nombre { font-size: 17px; font-weight: bold; }
-.datos { font-size: 13px; margin: 8px 0; }
+
+.nombre {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.datos {
+  font-size: 13px;
+  margin: 8px 0 4px;
+}
+
+.crono-jugador {
+  margin: 6px 0 10px;
+  padding: 8px;
+  background: #ffffffb8;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid #d3dce7;
+}
+
+.crono-jugador.activo {
+  background: #d7f8e3;
+  border-color: #168050;
+  color: #125e3d;
+}
+
 .accion-jugador {
   width: 100%;
   margin: 4px 0;
 }
+
 .marcadores {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6px;
 }
-.marcadores button { font-size: 13px; padding: 9px 2px; }
+
+.marcadores button {
+  font-size: 13px;
+  padding: 9px 2px;
+}
+
 .contador {
   text-align: center;
   font-size: 13px;
   font-weight: bold;
   padding: 6px 0;
 }
-table { border-collapse: collapse; width: 100%; font-size: 13px; }
-th, td { padding: 9px 4px; border-bottom: 1px solid #ddd; }
-td:not(:first-child), th:not(:first-child) { text-align: right; }
-.tabla-scroll { overflow-x: auto; }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+}
+
+th, td {
+  padding: 9px 4px;
+  border-bottom: 1px solid #ddd;
+}
+
+td:not(:first-child),
+th:not(:first-child) {
+  text-align: right;
+}
+
+.tabla-scroll {
+  overflow-x: auto;
+}
+
 @media(min-width: 700px) {
-  .jugadores { grid-template-columns: repeat(3, 1fr); }
+  .jugadores {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>
 </head>
@@ -108,60 +193,66 @@ td:not(:first-child), th:not(:first-child) { text-align: right; }
 </header>
 
 <main>
-<section class="panel">
-  <div id="reloj" class="reloj">00:00</div>
-  <p id="estado" class="estado">Preparar primera parte</p>
-  <p id="ayuda" class="ayuda"></p>
-  <div class="botones">
-    <button id="iniciar" onclick="iniciarParte()">
-      Iniciar primera parte
-    </button>
-    <button id="terminar" class="rojo"
-      onclick="terminarParte()" style="display:none">
-      Terminar primera parte
-    </button>
-    <button class="gris" onclick="deshacerCambio()">
-      Deshacer último cambio
-    </button>
-  </div>
-</section>
+  <section class="panel">
+    <div id="reloj" class="reloj">00:00</div>
+    <p id="estado" class="estado">Preparar primera parte</p>
+    <p id="ayuda" class="ayuda"></p>
 
-<section class="panel">
-  <h2 id="tituloJugadores">Titulares: 0/8</h2>
-  <div id="jugadores" class="jugadores"></div>
-</section>
+    <div class="botones">
+      <button id="iniciar" onclick="iniciarParte()">
+        Iniciar primera parte
+      </button>
 
-<section class="panel">
-  <h2>Estadísticas del partido</h2>
-  <div class="tabla-scroll">
-    <table>
-      <thead>
-        <tr>
-          <th>Jugador</th>
-          <th>1.ª</th>
-          <th>2.ª</th>
-          <th>Total</th>
-          <th>⚽</th>
-          <th>👟</th>
-        </tr>
-      </thead>
-      <tbody id="resumen"></tbody>
-    </table>
-  </div>
-  <br>
-  <div class="botones">
-    <button class="verde" onclick="exportarCSV()">
-      Exportar Excel (CSV)
-    </button>
-    <button class="rojo" onclick="nuevoPartido()">
-      Nuevo partido
-    </button>
-  </div>
-  <p class="ayuda">
-    Los datos se guardan automáticamente en este navegador.
-    Exporta el partido antes de empezar uno nuevo.
-  </p>
-</section>
+      <button id="terminar" class="rojo"
+        onclick="terminarParte()" style="display:none">
+        Terminar primera parte
+      </button>
+
+      <button class="gris" onclick="deshacerCambio()">
+        Deshacer último cambio
+      </button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2 id="tituloJugadores">Titulares: 0/8</h2>
+    <div id="jugadores" class="jugadores"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Estadísticas del partido</h2>
+    <div class="tabla-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Jugador</th>
+            <th>1.ª</th>
+            <th>2.ª</th>
+            <th>Total</th>
+            <th>⚽</th>
+            <th>👟</th>
+          </tr>
+        </thead>
+        <tbody id="resumen"></tbody>
+      </table>
+    </div>
+
+    <br>
+
+    <div class="botones">
+      <button class="verde" onclick="exportarCSV()">
+        Exportar Excel (CSV)
+      </button>
+      <button class="rojo" onclick="nuevoPartido()">
+        Nuevo partido
+      </button>
+    </div>
+
+    <p class="ayuda">
+      Los datos se guardan automáticamente en este navegador.
+      Exporta el partido antes de empezar uno nuevo.
+    </p>
+  </section>
 </main>
 
 <script>
@@ -182,7 +273,7 @@ const PLANTILLA = [
   [14, "Leo Mendes"]
 ];
 
-const CLAVE = "minutos_benjamines_goles_v1";
+const CLAVE = "minutos_benjamines_goles_v2";
 const DURACION = 25 * 60;
 const MAX_JUGADORES = 8;
 
@@ -211,9 +302,11 @@ try {
   const guardado = localStorage.getItem(CLAVE);
   if (guardado) {
     const recuperado = JSON.parse(guardado);
-    if (recuperado &&
-        Array.isArray(recuperado.jugadores) &&
-        recuperado.jugadores.length === PLANTILLA.length) {
+    if (
+      recuperado &&
+      Array.isArray(recuperado.jugadores) &&
+      recuperado.jugadores.length === PLANTILLA.length
+    ) {
       datos = recuperado;
     }
   }
@@ -229,13 +322,17 @@ function guardar() {
   }
 }
 
-function copia() {
-  return JSON.parse(JSON.stringify(datos));
-}
-
 function registrarCambio() {
   historial.push(datos.jugadores.map(j => j.campo));
   if (historial.length > 30) historial.shift();
+}
+
+function esPreparacion() {
+  return datos.fase === "pre1" || datos.fase === "descanso";
+}
+
+function jugadorPorDorsal(dorsal) {
+  return datos.jugadores.find(j => j.dorsal === dorsal);
 }
 
 function avanzarTiempo() {
@@ -244,10 +341,7 @@ function avanzarTiempo() {
   const ahora = Date.now();
   const anterior = datos.ultimaActualizacion || ahora;
   const delta = Math.max(0, (ahora - anterior) / 1000);
-  const incremento = Math.min(
-    delta,
-    Math.max(0, DURACION - datos.segundos)
-  );
+  const incremento = Math.min(delta, Math.max(0, DURACION - datos.segundos));
 
   datos.segundos += incremento;
   datos.ultimaActualizacion = ahora;
@@ -266,21 +360,15 @@ function avanzarTiempo() {
 function relojFormato(segundos) {
   const s = Math.floor(segundos);
   const m = Math.floor(s / 60);
-  return String(m).padStart(2, "0") + ":" +
-         String(s % 60).padStart(2, "0");
+  return String(m).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
 }
 
 function minutosFormato(segundos) {
   return (segundos / 60).toFixed(1).replace(".", ",");
 }
 
-function esPreparacion() {
-  return datos.fase === "pre1" ||
-         datos.fase === "descanso";
-}
-
-function jugadorPorDorsal(dorsal) {
-  return datos.jugadores.find(j => j.dorsal === dorsal);
+function tiempoTotalJugador(jugador) {
+  return jugador.tiempos[0] + jugador.tiempos[1];
 }
 
 function tocarJugador(dorsal) {
@@ -404,9 +492,9 @@ function estadistica(dorsal, tipo, cantidad) {
 }
 
 function nuevoPartido() {
-  if (!confirm(
-    "¿Empezar un partido nuevo? Exporta antes las estadísticas."
-  )) return;
+  if (!confirm("¿Empezar un partido nuevo? Exporta antes las estadísticas.")) {
+    return;
+  }
 
   datos = estadoInicial();
   historial = [];
@@ -418,11 +506,15 @@ function exportarCSV() {
   avanzarTiempo();
   guardar();
 
-  const filas = [
-    ["Dorsal", "Nombre", "Primera parte (min)",
-     "Segunda parte (min)", "Total (min)",
-     "Goles", "Asistencias"]
-  ];
+  const filas = [[
+    "Dorsal",
+    "Nombre",
+    "Primera parte (min)",
+    "Segunda parte (min)",
+    "Total (min)",
+    "Goles",
+    "Asistencias"
+  ]];
 
   for (const j of datos.jugadores) {
     filas.push([
@@ -430,14 +522,13 @@ function exportarCSV() {
       j.nombre,
       minutosFormato(j.tiempos[0]),
       minutosFormato(j.tiempos[1]),
-      minutosFormato(j.tiempos[0] + j.tiempos[1]),
+      minutosFormato(tiempoTotalJugador(j)),
       j.goles,
       j.asistencias
     ]);
   }
 
-  const contenido = "\uFEFF" +
-    filas.map(f => f.join(";")).join("\r\n");
+  const contenido = "\uFEFF" + filas.map(f => f.join(";")).join("\r\n");
 
   const blob = new Blob([contenido], {
     type: "text/csv;charset=utf-8"
@@ -445,7 +536,6 @@ function exportarCSV() {
 
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-
   a.href = url;
   a.download = "minutos-benjamines.csv";
   document.body.appendChild(a);
@@ -504,7 +594,7 @@ function pintar() {
   ayuda.textContent = preparando
     ? "Selecciona exactamente 8 titulares."
     : jugando
-      ? "Toca para entrar o salir. Los goles y asistencias se anotan abajo."
+      ? "Toca para entrar o salir. Goles y asistencias se anotan debajo."
       : "Partido terminado. Exporta las estadísticas.";
 
   const activos = datos.jugadores.filter(j => j.campo).length;
@@ -521,7 +611,8 @@ function pintar() {
     const elegido = datos.seleccion.includes(j.dorsal);
 
     const tarjeta = document.createElement("div");
-    tarjeta.className = "jugador" +
+    tarjeta.className =
+      "jugador" +
       (jugando && j.campo ? " campo" : "") +
       (preparando && elegido ? " elegido" : "");
 
@@ -532,9 +623,18 @@ function pintar() {
     const datosJugador = document.createElement("div");
     datosJugador.className = "datos";
     datosJugador.textContent =
-      minutosFormato(j.tiempos[0] + j.tiempos[1]) +
-      " min · ⚽ " + j.goles +
+      "Min totales: " + minutosFormato(tiempoTotalJugador(j)) +
+      " · ⚽ " + j.goles +
       " · 👟 " + j.asistencias;
+
+    const crono = document.createElement("div");
+    crono.className = "crono-jugador" + (jugando && j.campo ? " activo" : "");
+
+    if (jugando && j.campo) {
+      crono.textContent = "⏱ En directo: " + relojFormato(tiempoTotalJugador(j)) + " corriendo";
+    } else {
+      crono.textContent = "⏱ Tiempo jugador: " + relojFormato(tiempoTotalJugador(j));
+    }
 
     const accion = crearBoton(
       preparando
@@ -542,8 +642,7 @@ function pintar() {
         : jugando
           ? (j.campo ? "🟢 SACAR" : "⚪ METER")
           : "Partido terminado",
-      "accion-jugador " +
-        (j.campo ? "verde" : "gris"),
+      "accion-jugador " + (j.campo ? "verde" : "gris"),
       () => tocarJugador(j.dorsal)
     );
 
@@ -556,29 +655,25 @@ function pintar() {
     const controlesGoles = document.createElement("div");
     controlesGoles.className = "marcadores";
     controlesGoles.append(
-      crearBoton("+ Gol", "verde",
-        () => estadistica(j.dorsal, "goles", 1)),
-      crearBoton("- Gol", "rojo",
-        () => estadistica(j.dorsal, "goles", -1))
+      crearBoton("+ Gol", "verde", () => estadistica(j.dorsal, "goles", 1)),
+      crearBoton("- Gol", "rojo", () => estadistica(j.dorsal, "goles", -1))
     );
 
     const contadorAsistencias = document.createElement("div");
     contadorAsistencias.className = "contador";
-    contadorAsistencias.textContent =
-      "👟 Asistencias: " + j.asistencias;
+    contadorAsistencias.textContent = "👟 Asistencias: " + j.asistencias;
 
     const controlesAsistencias = document.createElement("div");
     controlesAsistencias.className = "marcadores";
     controlesAsistencias.append(
-      crearBoton("+ Asist.", "verde",
-        () => estadistica(j.dorsal, "asistencias", 1)),
-      crearBoton("- Asist.", "rojo",
-        () => estadistica(j.dorsal, "asistencias", -1))
+      crearBoton("+ Asist.", "verde", () => estadistica(j.dorsal, "asistencias", 1)),
+      crearBoton("- Asist.", "rojo", () => estadistica(j.dorsal, "asistencias", -1))
     );
 
     tarjeta.append(
       nombre,
       datosJugador,
+      crono,
       accion,
       contadorGoles,
       controlesGoles,
@@ -599,7 +694,7 @@ function pintar() {
       j.dorsal + " · " + j.nombre,
       minutosFormato(j.tiempos[0]),
       minutosFormato(j.tiempos[1]),
-      minutosFormato(j.tiempos[0] + j.tiempos[1]),
+      minutosFormato(tiempoTotalJugador(j)),
       j.goles,
       j.asistencias
     ];
@@ -614,7 +709,6 @@ function pintar() {
   }
 }
 
-// Actualizar tiempo al volver a abrir la web.
 avanzarTiempo();
 pintar();
 
