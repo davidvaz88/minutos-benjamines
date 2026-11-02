@@ -3,16 +3,16 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#10243a">
 <title>Minutos Benjamines</title>
 <style>
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  font-family: system-ui, Arial, sans-serif;
+  font-family: Arial, sans-serif;
+  color: #182638;
   background: #edf2f7;
-  color: #172536;
 }
 header {
   background: #10243a;
@@ -20,102 +20,120 @@ header {
   padding: 18px;
   text-align: center;
 }
-h1 { margin: 0; font-size: 23px; }
-main { max-width: 850px; margin: auto; padding: 14px; }
+h1 { font-size: 23px; margin: 0; }
+main { max-width: 900px; margin: auto; padding: 12px; }
 .panel {
   background: white;
-  padding: 16px;
-  border-radius: 12px;
+  border-radius: 13px;
+  padding: 15px;
   margin-bottom: 14px;
-  box-shadow: 0 2px 8px #0000000d;
+  box-shadow: 0 2px 8px #00000010;
 }
 .reloj {
-  font-size: 48px;
+  font-size: 52px;
   font-weight: 800;
   text-align: center;
   font-variant-numeric: tabular-nums;
 }
-.estado { text-align: center; font-weight: 700; }
+.estado { text-align: center; font-weight: bold; }
 .ayuda { color: #536579; font-size: 14px; }
-.botones { display: flex; flex-wrap: wrap; gap: 9px; }
+.botones { display: flex; gap: 8px; flex-wrap: wrap; }
 button {
-  cursor: pointer;
   border: 0;
   border-radius: 9px;
-  padding: 12px 15px;
-  background: #1766d1;
-  color: white;
-  font-weight: 700;
+  padding: 11px;
   font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  background: #1766d1;
+  touch-action: manipulation;
 }
-button:disabled { opacity: .4; cursor: not-allowed; }
-button.sec { background: #566678; }
-button.danger { background: #b52c36; }
-button.success { background: #168050; }
+button:disabled { opacity: .4; cursor: default; }
+button.verde { background: #168050; }
+button.rojo { background: #bd3542; }
+button.gris { background: #607184; }
+button.naranja { background: #b16b08; }
 .jugadores {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0,1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 .jugador {
-  text-align: left;
   background: #e9eef5;
-  color: #172536;
+  border-radius: 12px;
+  padding: 11px;
   border: 2px solid transparent;
-  min-height: 105px;
+  min-width: 0;
 }
 .jugador.campo {
-  background: #d6f4e2;
+  background: #dcf8e6;
   border-color: #168050;
 }
-.jugador.seleccionado {
-  background: #dceafe;
+.jugador.elegido {
+  background: #dceaff;
   border-color: #1766d1;
 }
-.nombre { display: block; font-size: 17px; }
-.minutos { display: block; margin-top: 7px; }
-.situacion { display: block; font-size: 12px; margin-top: 5px; }
-table { width: 100%; border-collapse: collapse; }
-td, th { padding: 9px 5px; border-bottom: 1px solid #ddd; text-align: left; }
+.nombre { font-size: 17px; font-weight: bold; }
+.datos { font-size: 13px; margin: 8px 0; }
+.accion-jugador {
+  width: 100%;
+  margin: 4px 0;
+}
+.marcadores {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.marcadores button { font-size: 13px; padding: 9px 2px; }
+.contador {
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 6px 0;
+}
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { padding: 9px 4px; border-bottom: 1px solid #ddd; }
 td:not(:first-child), th:not(:first-child) { text-align: right; }
-@media (min-width: 650px) {
+.tabla-scroll { overflow-x: auto; }
+@media(min-width: 700px) {
   .jugadores { grid-template-columns: repeat(3, 1fr); }
 }
 </style>
 </head>
 <body>
+
 <header>
   <h1>⚽ Minutos Benjamines</h1>
 </header>
 
 <main>
-  <section class="panel">
-    <div id="reloj" class="reloj">00:00</div>
-    <p id="estado" class="estado">PREPARAR PRIMERA PARTE</p>
-    <p id="indicaciones" class="ayuda">
-      Selecciona exactamente 8 titulares.
-    </p>
-    <div class="botones">
-      <button id="iniciar" onclick="iniciarParte()">
-        Iniciar primera parte
-      </button>
-      <button id="terminar" class="danger"
-        onclick="terminarParte()" disabled>
-        Terminar parte
-      </button>
-      <button class="sec" onclick="deshacer()">
-        Deshacer cambio
-      </button>
-    </div>
-  </section>
+<section class="panel">
+  <div id="reloj" class="reloj">00:00</div>
+  <p id="estado" class="estado">Preparar primera parte</p>
+  <p id="ayuda" class="ayuda"></p>
+  <div class="botones">
+    <button id="iniciar" onclick="iniciarParte()">
+      Iniciar primera parte
+    </button>
+    <button id="terminar" class="rojo"
+      onclick="terminarParte()" style="display:none">
+      Terminar primera parte
+    </button>
+    <button class="gris" onclick="deshacerCambio()">
+      Deshacer último cambio
+    </button>
+  </div>
+</section>
 
-  <section class="panel">
-    <h2 id="tituloJugadores">Titulares: 0/8</h2>
-    <div id="jugadores" class="jugadores"></div>
-  </section>
+<section class="panel">
+  <h2 id="tituloJugadores">Titulares: 0/8</h2>
+  <div id="jugadores" class="jugadores"></div>
+</section>
 
-  <section class="panel">
-    <h2>Minutos acumulados</h2>
+<section class="panel">
+  <h2>Estadísticas del partido</h2>
+  <div class="tabla-scroll">
     <table>
       <thead>
         <tr>
@@ -123,26 +141,33 @@ td:not(:first-child), th:not(:first-child) { text-align: right; }
           <th>1.ª</th>
           <th>2.ª</th>
           <th>Total</th>
+          <th>⚽</th>
+          <th>👟</th>
         </tr>
       </thead>
       <tbody id="resumen"></tbody>
     </table>
-    <br>
-    <div class="botones">
-      <button class="success" onclick="exportarCSV()">
-        Exportar Excel (CSV)
-      </button>
-      <button class="danger" onclick="reiniciar()">
-        Nuevo partido
-      </button>
-    </div>
-  </section>
+  </div>
+  <br>
+  <div class="botones">
+    <button class="verde" onclick="exportarCSV()">
+      Exportar Excel (CSV)
+    </button>
+    <button class="rojo" onclick="nuevoPartido()">
+      Nuevo partido
+    </button>
+  </div>
+  <p class="ayuda">
+    Los datos se guardan automáticamente en este navegador.
+    Exporta el partido antes de empezar uno nuevo.
+  </p>
+</section>
 </main>
 
 <script>
 "use strict";
 
-const plantilla = [
+const PLANTILLA = [
   [1, "Mauro"],
   [3, "Javi"],
   [4, "Elías"],
@@ -157,58 +182,59 @@ const plantilla = [
   [14, "Leo Mendes"]
 ];
 
-const CLAVE = "benjamines_v4";
+const CLAVE = "minutos_benjamines_goles_v1";
 const DURACION = 25 * 60;
+const MAX_JUGADORES = 8;
 
-function estadoNuevo() {
+function estadoInicial() {
   return {
     fase: "pre1",
     parte: 1,
-    seleccion: [],
     segundos: 0,
-    actualizado: null,
-    jugadores: plantilla.map(([dorsal, nombre]) => ({
+    ultimaActualizacion: null,
+    seleccion: [],
+    jugadores: PLANTILLA.map(([dorsal, nombre]) => ({
       dorsal,
       nombre,
       campo: false,
-      tiempos: [0, 0]
+      tiempos: [0, 0],
+      goles: 0,
+      asistencias: 0
     }))
   };
 }
 
-let datos = estadoNuevo();
+let datos = estadoInicial();
 let historial = [];
 
 try {
   const guardado = localStorage.getItem(CLAVE);
   if (guardado) {
     const recuperado = JSON.parse(guardado);
-    if (
-      recuperado &&
-      Array.isArray(recuperado.jugadores) &&
-      recuperado.jugadores.length === plantilla.length
-    ) {
+    if (recuperado &&
+        Array.isArray(recuperado.jugadores) &&
+        recuperado.jugadores.length === PLANTILLA.length) {
       datos = recuperado;
     }
   }
-} catch (e) {
-  console.warn("No se pudo recuperar el partido", e);
+} catch (error) {
+  console.warn("Error recuperando datos", error);
 }
 
 function guardar() {
   try {
     localStorage.setItem(CLAVE, JSON.stringify(datos));
-  } catch (e) {
-    console.warn("No se pudo guardar", e);
+  } catch (error) {
+    console.warn("Error guardando datos", error);
   }
 }
 
-function copiarEstado() {
+function copia() {
   return JSON.parse(JSON.stringify(datos));
 }
 
 function registrarCambio() {
-  historial.push(copiarEstado());
+  historial.push(datos.jugadores.map(j => j.campo));
   if (historial.length > 30) historial.shift();
 }
 
@@ -216,17 +242,19 @@ function avanzarTiempo() {
   if (datos.fase !== "jugando") return;
 
   const ahora = Date.now();
-  const anterior = datos.actualizado || ahora;
-  const transcurrido = Math.max(0, (ahora - anterior) / 1000);
-  const restante = Math.max(0, DURACION - datos.segundos);
-  const incremento = Math.min(transcurrido, restante);
+  const anterior = datos.ultimaActualizacion || ahora;
+  const delta = Math.max(0, (ahora - anterior) / 1000);
+  const incremento = Math.min(
+    delta,
+    Math.max(0, DURACION - datos.segundos)
+  );
 
   datos.segundos += incremento;
-  datos.actualizado = ahora;
+  datos.ultimaActualizacion = ahora;
 
-  for (const jugador of datos.jugadores) {
-    if (jugador.campo) {
-      jugador.tiempos[datos.parte - 1] += incremento;
+  for (const j of datos.jugadores) {
+    if (j.campo) {
+      j.tiempos[datos.parte - 1] += incremento;
     }
   }
 
@@ -235,50 +263,54 @@ function avanzarTiempo() {
   }
 }
 
-function formatoReloj(segundos) {
+function relojFormato(segundos) {
   const s = Math.floor(segundos);
   const m = Math.floor(s / 60);
   return String(m).padStart(2, "0") + ":" +
-    String(s % 60).padStart(2, "0");
+         String(s % 60).padStart(2, "0");
 }
 
-function formatoMinutos(segundos) {
+function minutosFormato(segundos) {
   return (segundos / 60).toFixed(1).replace(".", ",");
 }
 
-function pulsarJugador(dorsal) {
+function esPreparacion() {
+  return datos.fase === "pre1" ||
+         datos.fase === "descanso";
+}
+
+function jugadorPorDorsal(dorsal) {
+  return datos.jugadores.find(j => j.dorsal === dorsal);
+}
+
+function tocarJugador(dorsal) {
   avanzarTiempo();
 
-  const jugador = datos.jugadores.find(
-    j => j.dorsal === dorsal
-  );
-  if (!jugador) return;
+  const j = jugadorPorDorsal(dorsal);
+  if (!j) return;
 
-  if (datos.fase === "pre1" || datos.fase === "descanso") {
-    const posicion = datos.seleccion.indexOf(dorsal);
+  if (esPreparacion()) {
+    const indice = datos.seleccion.indexOf(dorsal);
 
-    if (posicion >= 0) {
-      datos.seleccion.splice(posicion, 1);
+    if (indice >= 0) {
+      datos.seleccion.splice(indice, 1);
     } else {
-      if (datos.seleccion.length >= 8) {
+      if (datos.seleccion.length >= MAX_JUGADORES) {
         alert("Solo puedes seleccionar 8 titulares.");
         return;
       }
       datos.seleccion.push(dorsal);
     }
   } else if (datos.fase === "jugando") {
-    registrarCambio();
+    const enCampo = datos.jugadores.filter(x => x.campo).length;
 
-    if (jugador.campo) {
-      jugador.campo = false;
-    } else {
-      const enCampo = datos.jugadores.filter(j => j.campo).length;
-      if (enCampo >= 8) {
-        alert("Primero debes sacar a un jugador.");
-        return;
-      }
-      jugador.campo = true;
+    if (!j.campo && enCampo >= MAX_JUGADORES) {
+      alert("Primero saca a un jugador del campo.");
+      return;
     }
+
+    registrarCambio();
+    j.campo = !j.campo;
   } else {
     return;
   }
@@ -290,36 +322,31 @@ function pulsarJugador(dorsal) {
 function iniciarParte() {
   avanzarTiempo();
 
-  if (
-    datos.fase !== "pre1" &&
-    datos.fase !== "descanso"
-  ) return;
+  if (!esPreparacion()) return;
 
-  if (datos.seleccion.length !== 8) {
-    alert("Selecciona exactamente 8 titulares.");
+  if (datos.seleccion.length !== MAX_JUGADORES) {
+    alert("Debes seleccionar exactamente 8 titulares.");
     return;
   }
-
-  registrarCambio();
 
   datos.parte = datos.fase === "pre1" ? 1 : 2;
   datos.segundos = 0;
   datos.fase = "jugando";
-  datos.actualizado = Date.now();
+  datos.ultimaActualizacion = Date.now();
 
   for (const j of datos.jugadores) {
     j.campo = datos.seleccion.includes(j.dorsal);
   }
 
   datos.seleccion = [];
+  historial = [];
+
   guardar();
   pintar();
 }
 
 function finalizarParte() {
-  if (datos.fase !== "jugando") return;
-
-  datos.actualizado = null;
+  datos.ultimaActualizacion = null;
 
   for (const j of datos.jugadores) {
     j.campo = false;
@@ -327,6 +354,8 @@ function finalizarParte() {
 
   datos.seleccion = [];
   datos.fase = datos.parte === 1 ? "descanso" : "final";
+  historial = [];
+
   guardar();
 }
 
@@ -335,51 +364,51 @@ function terminarParte() {
 
   avanzarTiempo();
 
-  if (datos.fase !== "jugando") {
-    pintar();
-    return;
+  if (datos.fase === "jugando") {
+    finalizarParte();
   }
 
-  registrarCambio();
-  finalizarParte();
   pintar();
 }
 
-function deshacer() {
-  if (historial.length === 0) {
-    alert("No hay cambios para deshacer.");
+function deshacerCambio() {
+  avanzarTiempo();
+
+  if (datos.fase !== "jugando" || historial.length === 0) {
+    alert("No hay cambios que deshacer.");
     return;
   }
 
-  avanzarTiempo();
   const anterior = historial.pop();
 
-  if (anterior.fase === "jugando") {
-    // No recuperar el tiempo del reloj hacia atrás.
-    // Solo restaurar quién estaba en el campo.
-    if (datos.fase === "jugando" &&
-        anterior.parte === datos.parte) {
-      datos.jugadores.forEach((j, i) => {
-        j.campo = anterior.jugadores[i].campo;
-      });
-    } else {
-      alert("No se puede deshacer el inicio de una parte.");
-      return;
-    }
-  } else {
-    datos = anterior;
-  }
+  datos.jugadores.forEach((j, i) => {
+    j.campo = anterior[i];
+  });
 
   guardar();
   pintar();
 }
 
-function reiniciar() {
-  if (!confirm("¿Borrar el partido actual y empezar uno nuevo?")) {
-    return;
-  }
+function estadistica(dorsal, tipo, cantidad) {
+  avanzarTiempo();
 
-  datos = estadoNuevo();
+  const j = jugadorPorDorsal(dorsal);
+  if (!j) return;
+
+  if (tipo !== "goles" && tipo !== "asistencias") return;
+
+  j[tipo] = Math.max(0, j[tipo] + cantidad);
+
+  guardar();
+  pintar();
+}
+
+function nuevoPartido() {
+  if (!confirm(
+    "¿Empezar un partido nuevo? Exporta antes las estadísticas."
+  )) return;
+
+  datos = estadoInicial();
   historial = [];
   guardar();
   pintar();
@@ -387,64 +416,72 @@ function reiniciar() {
 
 function exportarCSV() {
   avanzarTiempo();
+  guardar();
 
   const filas = [
-    ["Dorsal", "Nombre", "Primera parte",
-     "Segunda parte", "Total"]
+    ["Dorsal", "Nombre", "Primera parte (min)",
+     "Segunda parte (min)", "Total (min)",
+     "Goles", "Asistencias"]
   ];
 
   for (const j of datos.jugadores) {
     filas.push([
       j.dorsal,
       j.nombre,
-      formatoMinutos(j.tiempos[0]),
-      formatoMinutos(j.tiempos[1]),
-      formatoMinutos(j.tiempos[0] + j.tiempos[1])
+      minutosFormato(j.tiempos[0]),
+      minutosFormato(j.tiempos[1]),
+      minutosFormato(j.tiempos[0] + j.tiempos[1]),
+      j.goles,
+      j.asistencias
     ]);
   }
 
-  const contenido = "\uFEFF" + filas
-    .map(fila => fila.join(";"))
-    .join("\r\n");
+  const contenido = "\uFEFF" +
+    filas.map(f => f.join(";")).join("\r\n");
 
   const blob = new Blob([contenido], {
     type: "text/csv;charset=utf-8"
   });
 
   const url = URL.createObjectURL(blob);
-  const enlace = document.createElement("a");
-  enlace.href = url;
-  enlace.download = "minutos-benjamines.csv";
-  document.body.appendChild(enlace);
-  enlace.click();
-  enlace.remove();
+  const a = document.createElement("a");
+
+  a.href = url;
+  a.download = "minutos-benjamines.csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
 
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+function crearBoton(texto, clase, funcion) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = clase;
+  b.textContent = texto;
+  b.onclick = funcion;
+  return b;
+}
+
 function pintar() {
+  const jugando = datos.fase === "jugando";
+  const preparando = esPreparacion();
+
   const reloj = document.getElementById("reloj");
   const estado = document.getElementById("estado");
-  const indicaciones = document.getElementById("indicaciones");
+  const ayuda = document.getElementById("ayuda");
   const iniciar = document.getElementById("iniciar");
   const terminar = document.getElementById("terminar");
-  const titulo = document.getElementById("tituloJugadores");
-  const contenedor = document.getElementById("jugadores");
-  const resumen = document.getElementById("resumen");
 
-  const tiempoVisible = datos.parte === 2
+  const totalReloj = datos.parte === 2
     ? DURACION + datos.segundos
     : datos.segundos;
 
-  reloj.textContent = formatoReloj(tiempoVisible);
-
-  const jugando = datos.fase === "jugando";
-  const preparando = datos.fase === "pre1" ||
-    datos.fase === "descanso";
+  reloj.textContent = relojFormato(totalReloj);
 
   iniciar.style.display = preparando ? "" : "none";
   terminar.style.display = jugando ? "" : "none";
-  terminar.disabled = !jugando;
 
   if (datos.fase === "pre1") {
     estado.textContent = "PREPARAR PRIMERA PARTE";
@@ -453,8 +490,9 @@ function pintar() {
     estado.textContent = datos.parte === 1
       ? "PRIMERA PARTE EN JUEGO"
       : "SEGUNDA PARTE EN JUEGO";
+
     terminar.textContent = datos.parte === 1
-      ? "Terminar 1.ª parte"
+      ? "Terminar primera parte"
       : "Finalizar partido";
   } else if (datos.fase === "descanso") {
     estado.textContent = "DESCANSO · RELOJ PARADO";
@@ -463,90 +501,131 @@ function pintar() {
     estado.textContent = "PARTIDO FINALIZADO";
   }
 
-  indicaciones.textContent = preparando
-    ? "Selecciona 8 titulares antes de iniciar."
+  ayuda.textContent = preparando
+    ? "Selecciona exactamente 8 titulares."
     : jugando
-      ? "Toca un jugador para sacarlo o meterlo. Primero saca y después mete."
-      : "Puedes exportar los minutos o empezar otro partido.";
+      ? "Toca para entrar o salir. Los goles y asistencias se anotan abajo."
+      : "Partido terminado. Exporta las estadísticas.";
 
-  const enCampo = datos.jugadores.filter(j => j.campo).length;
+  const activos = datos.jugadores.filter(j => j.campo).length;
 
-  titulo.textContent = preparando
-    ? "Titulares: " + datos.seleccion.length + "/8"
-    : "Jugadores en campo: " + enCampo + "/8";
+  document.getElementById("tituloJugadores").textContent =
+    preparando
+      ? "Titulares: " + datos.seleccion.length + "/8"
+      : "En campo: " + activos + "/8";
 
-  contenedor.innerHTML = "";
+  const contenedor = document.getElementById("jugadores");
+  contenedor.replaceChildren();
 
   for (const j of datos.jugadores) {
-    const seleccionado = datos.seleccion.includes(j.dorsal);
+    const elegido = datos.seleccion.includes(j.dorsal);
 
-    const boton = document.createElement("button");
-    boton.type = "button";
-    boton.className = "jugador" +
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "jugador" +
       (jugando && j.campo ? " campo" : "") +
-      (preparando && seleccionado ? " seleccionado" : "");
+      (preparando && elegido ? " elegido" : "");
 
-    const nombre = document.createElement("span");
+    const nombre = document.createElement("div");
     nombre.className = "nombre";
     nombre.textContent = j.dorsal + " · " + j.nombre;
 
-    const minutos = document.createElement("span");
-    minutos.className = "minutos";
-    minutos.textContent = formatoMinutos(
-      j.tiempos[0] + j.tiempos[1]
-    ) + " min";
+    const datosJugador = document.createElement("div");
+    datosJugador.className = "datos";
+    datosJugador.textContent =
+      minutosFormato(j.tiempos[0] + j.tiempos[1]) +
+      " min · ⚽ " + j.goles +
+      " · 👟 " + j.asistencias;
 
-    const situacion = document.createElement("span");
-    situacion.className = "situacion";
-    situacion.textContent = jugando
-      ? (j.campo ? "🟢 EN CAMPO · Tocar para salir"
-                 : "⚪ BANQUILLO · Tocar para entrar")
-      : preparando
-        ? (seleccionado ? "✓ TITULAR" : "Tocar para seleccionar")
-        : "Minutos registrados";
+    const accion = crearBoton(
+      preparando
+        ? (elegido ? "✓ Titular" : "Seleccionar titular")
+        : jugando
+          ? (j.campo ? "🟢 SACAR" : "⚪ METER")
+          : "Partido terminado",
+      "accion-jugador " +
+        (j.campo ? "verde" : "gris"),
+      () => tocarJugador(j.dorsal)
+    );
 
-    boton.append(nombre, minutos, situacion);
-    boton.disabled = datos.fase === "final";
-    boton.onclick = () => pulsarJugador(j.dorsal);
-    contenedor.appendChild(boton);
+    accion.disabled = datos.fase === "final";
+
+    const contadorGoles = document.createElement("div");
+    contadorGoles.className = "contador";
+    contadorGoles.textContent = "⚽ Goles: " + j.goles;
+
+    const controlesGoles = document.createElement("div");
+    controlesGoles.className = "marcadores";
+    controlesGoles.append(
+      crearBoton("+ Gol", "verde",
+        () => estadistica(j.dorsal, "goles", 1)),
+      crearBoton("- Gol", "rojo",
+        () => estadistica(j.dorsal, "goles", -1))
+    );
+
+    const contadorAsistencias = document.createElement("div");
+    contadorAsistencias.className = "contador";
+    contadorAsistencias.textContent =
+      "👟 Asistencias: " + j.asistencias;
+
+    const controlesAsistencias = document.createElement("div");
+    controlesAsistencias.className = "marcadores";
+    controlesAsistencias.append(
+      crearBoton("+ Asist.", "verde",
+        () => estadistica(j.dorsal, "asistencias", 1)),
+      crearBoton("- Asist.", "rojo",
+        () => estadistica(j.dorsal, "asistencias", -1))
+    );
+
+    tarjeta.append(
+      nombre,
+      datosJugador,
+      accion,
+      contadorGoles,
+      controlesGoles,
+      contadorAsistencias,
+      controlesAsistencias
+    );
+
+    contenedor.appendChild(tarjeta);
   }
 
-  resumen.innerHTML = "";
+  const resumen = document.getElementById("resumen");
+  resumen.replaceChildren();
 
   for (const j of datos.jugadores) {
-    const fila = document.createElement("tr");
+    const tr = document.createElement("tr");
 
     const valores = [
       j.dorsal + " · " + j.nombre,
-      formatoMinutos(j.tiempos[0]),
-      formatoMinutos(j.tiempos[1]),
-      formatoMinutos(j.tiempos[0] + j.tiempos[1])
+      minutosFormato(j.tiempos[0]),
+      minutosFormato(j.tiempos[1]),
+      minutosFormato(j.tiempos[0] + j.tiempos[1]),
+      j.goles,
+      j.asistencias
     ];
 
     for (const valor of valores) {
-      const celda = document.createElement("td");
-      celda.textContent = valor;
-      fila.appendChild(celda);
+      const td = document.createElement("td");
+      td.textContent = valor;
+      tr.appendChild(td);
     }
 
-    resumen.appendChild(fila);
+    resumen.appendChild(tr);
   }
 }
 
-// Recuperar el tiempo transcurrido si Safari estuvo cerrado.
+// Actualizar tiempo al volver a abrir la web.
 avanzarTiempo();
 pintar();
 
-// Actualización periódica del cronómetro.
 setInterval(() => {
   if (datos.fase === "jugando") {
     avanzarTiempo();
     guardar();
     pintar();
   }
-}, 250);
+}, 1000);
 
-// Actualizar cuando se vuelve a abrir la aplicación.
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     avanzarTiempo();
