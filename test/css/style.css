@@ -1,1 +1,53 @@
+* {
+  box-sizing: border-box;
+}
 
+body {
+  margin: 0;
+  background: #edf2f7;
+  color: #172b43;
+  font-family: system-ui, sans-serif;
+}
+
+header {
+  background: #142948;
+  color: white;
+  padding: 16px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 10px;
+}
+
+.panel {
+  background: white;
+  padding: 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+#jugadores {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.jugador {
+  background: #e8eff7;
+  border-radius: 10px;
+  padding: 12px;
+  font-weight: 600;
+}
+
+@media (min-width: 650px) {
+  #jugadores {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
