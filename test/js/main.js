@@ -1,54 +1,116 @@
-class Jugador {
-  constructor(dorsal, nombre) {
-    this.dorsal = dorsal;
-    this.nombre = nombre;
-    this.segundosJugados = 0;
-    this.goles = 0;
-    this.asistencias = 0;
-  }
+import { Player } from "./models/Player.js";
+import { Match } from "./models/Match.js";
+import { MatchTimer } from "./services/MatchTimer.js";
 
-  get nombreCompleto() {
-    return `${this.dorsal} · ${this.nombre}`;
-  }
-}
-
-class Aplicacion {
+/**
+ * Aplicación de control de minutos
+ * Benxamín C - U.D. Santa Mariña
+ *
+ * Entorno: TEST
+ * Arquitectura: JavaScript ES6 + clases
+ *
+ * No utiliza Firebase de producción.
+ */
+class Application {
   constructor() {
-    this.jugadores = [
-      new Jugador(1, "Mauro"),
-      new Jugador(3, "Javi"),
-      new Jugador(4, "Elías"),
-      new Jugador(5, "Brais"),
-      new Jugador(6, "Xabi"),
-      new Jugador(7, "Roque"),
-      new Jugador(8, "Leo Estévez"),
-      new Jugador(9, "Thiago"),
-      new Jugador(10, "Enzo"),
-      new Jugador(11, "Angelo"),
-      new Jugador(12, "Xes"),
-      new Jugador(14, "Leo Mendes")
+    this.squad = [
+      [1, "Mauro"],
+      [3, "Javi"],
+      [4, "Elías"],
+      [5, "Brais"],
+      [6, "Xabi"],
+      [7, "Roque"],
+      [8, "Leo Estévez"],
+      [9, "Thiago"],
+      [10, "Enzo"],
+      [11, "Angelo"],
+      [12, "Xes"],
+      [14, "Leo Mendez"]
     ];
+
+    // Crear los objetos Player
+    this.players = this.squad.map(
+      ([number, name]) => new Player(number, name)
+    );
+
+    // Crear el partido de pruebas
+    this.match = new Match(
+      "Rival de prueba",
+      this.players,
+      25 * 60
+    );
+
+    // Crear el servicio de cronómetro
+    this.timer = new MatchTimer(
+      this.match,
+      () => this.render()
+    );
   }
 
-  iniciar() {
-    document.getElementById("estado").textContent =
-      "✅ Aplicación orientada a objetos inicializada";
+  /**
+   * Inicializar aplicación
+   */
+  start() {
+    const status = document.getElementById("estado");
 
-    this.mostrarJugadores();
+    if (status) {
+      status.textContent =
+        "✅ TEST · Aplicación orientada a objetos inicializada";
+    }
+
+    this.render();
   }
 
-  mostrarJugadores() {
-    const contenedor = document.getElementById("jugadores");
-    contenedor.replaceChildren();
+  /**
+   * Dibujar las tarjetas de jugadores
+   */
+  renderPlayers() {
+    const container = document.getElementById("jugadores");
 
-    for (const jugador of this.jugadores) {
-      const tarjeta = document.createElement("div");
-      tarjeta.className = "jugador";
-      tarjeta.textContent = jugador.nombreCompleto;
-      contenedor.appendChild(tarjeta);
+    if (!container) {
+      console.error("No existe el contenedor #jugadores");
+      return;
+    }
+
+    container.replaceChildren();
+
+    for (const player of this.players) {
+      const card = document.createElement("div");
+      card.className = "jugador";
+
+      const title = document.createElement("strong");
+      title.textContent = player.displayName;
+
+      const time = document.createElement("p");
+      time.textContent = player.formattedTime;
+
+      const goals = document.createElement("p");
+      goals.textContent = `⚽ Goles: ${player.goals}`;
+
+      const assists = document.createElement("p");
+      assists.textContent = `👟 Asistencias: ${player.assists}`;
+
+      card.append(
+        title,
+        time,
+        goals,
+        assists
+      );
+
+      container.appendChild(card);
     }
   }
+
+  /**
+   * Actualizar la interfaz
+   */
+  render() {
+    this.renderPlayers();
+  }
 }
 
-const app = new Aplicacion();
-app.iniciar();
+// Arrancar la aplicación
+document.addEventListener("DOMContentLoaded", () => {
+  const app = new Application();
+  app.start();
+});
