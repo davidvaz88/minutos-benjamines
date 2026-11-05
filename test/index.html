@@ -1,31 +1,63 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#142948">
-
   <title>Benxamín C · TEST</title>
-
   <link rel="stylesheet" href="./css/style.css">
 </head>
-
 <body>
   <header>
     <h1>⚽ Benxamín C · TEST</h1>
-    <p>U.D. Santa Mariña · Versión orientada a objetos</p>
+    <p>U.D. Santa Mariña · Entorno de pruebas</p>
   </header>
 
   <main>
     <section class="panel">
-      <h2>Entorno de desarrollo</h2>
-      <p id="estado">Inicializando aplicación...</p>
+      <h2>Partido de prueba</h2>
+      <p id="estado">Inicializando...</p>
+
+      <div class="marcador">
+        <div>
+          <small>Santa Mariña</small>
+          <strong id="golesLocal">0</strong>
+        </div>
+        <span>–</span>
+        <div>
+          <small>Rival</small>
+          <strong id="golesVisitante">0</strong>
+        </div>
+      </div>
+
+      <div id="reloj">00:00</div>
+
+      <p id="fase">Selecciona 8 titulares</p>
+
+      <div class="acciones">
+        <button id="iniciar" class="verde">
+          Iniciar partido
+        </button>
+        <button id="finalizar" class="rojo" disabled>
+          Finalizar parte
+        </button>
+        <button id="golRival" disabled>
+          + Gol rival
+        </button>
+      </div>
     </section>
 
     <section class="panel">
-      <h2>Jugadores</h2>
+      <h2 id="tituloJugadores">Titulares: 0/8</h2>
       <div id="jugadores"></div>
     </section>
+
+    <details class="panel">
+      <summary>📋 Cronología del partido</summary>
+      <div id="cronologia"></div>
+    </details>
   </main>
 
   <script type="module" src="./js/main.js"></script>
